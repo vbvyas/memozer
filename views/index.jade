@@ -1,34 +1,14 @@
-doctype 5
-html
-  head
-    title= title
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    meta(name='description', content='')
-    meta(name='author', content='')
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.css') 
-    link(rel='stylesheet', href='/stylesheets/responsive-override.css')
-    link(rel='stylesheet', href='/stylesheets/bootstrap-select.css')
-    script(src='/javascripts/jquery-1.10.2.min.js')
-  body
-    div.navbar.navbar-fixed-top
-      div.navbar-inner
-        div.container
-          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.brand(href='/') memozer
-          div.nav-collapse.collapse
-            ul.nav
-              li
-                a(href='/about') About
+extends layout
 
-    div.container
-      block content
-      
-    script(src='/bootstrap/js/bootstrap.min.js')
-    script(src='/javascripts/bootstrap-select.js')
+block content
+  br
+  ul.list-group
+    li.list-group-item
+      | Add Contact
+    li.list-group-item
+      | Contacts
+      span.badge &nbsp; 99+ &nbsp;
+    li.list-group-item
+      | Follow-ups
+      span.badge &nbsp; 5 &nbsp; 
+            
