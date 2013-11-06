@@ -2,13 +2,16 @@ extends layout
 
 block content
   br
-  ul.list-group
-    li.list-group-item
-      | Add Contact
-    li.list-group-item
+  div.list-group
+    a.list-group-item(href='#')
+      span.fa.fa-plus &nbsp;
+      | New contact
+    a.list-group-item(href='#')
+      span.fa.fa-users &nbsp;
       | Contacts
-      span.badge &nbsp; 99+ &nbsp;
-    li.list-group-item
+      span.badge &nbsp; 99 + &nbsp;
+    a.list-group-item(href='#')
+      span.glyphicon.glyphicon-list &nbsp;
       | Follow-ups
       span.badge &nbsp; 5 &nbsp; 
             
