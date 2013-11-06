@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , socialnetwork = require('./routes/socialnetwork')
+  , contacts = require('./routes/contacts')
   , http = require('http')
   , path = require('path');
 
@@ -32,8 +33,9 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/sn/search', socialnetwork.search);
-app.get('/sn/search_results', socialnetwork.search_results);
+app.get('/sn/q', socialnetwork.search_results);
 //app.get('/sn/search_result', socialnetwork.search_result);
+app.get('/contacts', contacts.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

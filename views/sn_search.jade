@@ -13,10 +13,10 @@ block content
     input.form-control(type='text', placeholder='person\'s name')
   br
   div.text-center
-    button.btn.btn-default Lookup &nbsp;
+    a.btn.btn-default(href="/sn/q") Lookup &nbsp;
       span.fa.fa-search
-  br 
-  br
-  a(href="/") 
-    span.fa.fa-backward &nbsp;
-    | Back  
+  br        
+  ul.pager
+    li.previous 
+      a(href="/") &larr; &nbsp; Go Home &nbsp;
+        span.glyphicon.glyphicon-home  
