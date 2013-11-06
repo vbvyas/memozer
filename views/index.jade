@@ -1,9 +1,11 @@
 extends layout
 
 block content
-  br
+  // TODO add user logged in related logic (redirect to login page if not logged in)
+  h2 memozer  
+  p organize your life
   div.list-group
-    a.list-group-item(href='#')
+    a.list-group-item(href='/sn/search')
       span.fa.fa-plus &nbsp;
       | New contact
     a.list-group-item(href='#')

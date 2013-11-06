@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h3 Lookup person by Twitter handle
+  div.input-group
+    span.input-group-addon @
+    input.form-control(type='text', placeholder='twitter username')
+  h2.text-center - or -
+  h3 Search for a person by name
+  div.input-group
+    span.input-group-addon 
+      span.glyphicon.glyphicon-user
+    input.form-control(type='text', placeholder='person\'s name')
+  br
+  div.text-center
+    button.btn.btn-default Lookup &nbsp;
+      span.fa.fa-search
+  br 
+  br
+  a(href="/") 
+    span.fa.fa-backward &nbsp;
+    | Back  
