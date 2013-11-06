@@ -4,5 +4,5 @@
  */
 
 exports.list = function(req, res){
-  res.render('contacts_list', { title: 'memozer | contacts' });
+  res.render('followup_list', { title: 'memozer | followups' });
 };

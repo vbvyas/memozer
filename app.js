@@ -7,6 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , socialnetwork = require('./routes/socialnetwork')
   , contacts = require('./routes/contacts')
+  , followups = require('./routes/followups')
   , http = require('http')
   , path = require('path');
 
@@ -36,6 +37,7 @@ app.get('/sn/search', socialnetwork.search);
 app.get('/sn/q', socialnetwork.search_results);
 //app.get('/sn/search_result', socialnetwork.search_result);
 app.get('/contacts', contacts.list);
+app.get('/followups', followups.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
