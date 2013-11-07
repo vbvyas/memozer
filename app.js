@@ -37,6 +37,7 @@ app.get('/sn/search', socialnetwork.search);
 app.get('/sn/q', socialnetwork.search_results);
 //app.get('/sn/search_result', socialnetwork.search_result);
 app.get('/contacts', contacts.list);
+app.get('/contact', contacts.show);
 app.get('/followups', followups.list);
 
 http.createServer(app).listen(app.get('port'), function(){
