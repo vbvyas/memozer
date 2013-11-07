@@ -3,6 +3,31 @@ extends layout
 block content
   br
   form(role='form')
-    div.form-group
-      label(for='twitterUsername') Twitter Username
-      input.form-control#twitterUsername @kevd1337 
+    fieldset
+      legend Editing "
+        span.text-info Kevin Dela Rosa
+        | "
+      
+      div.form-group
+        label(for='contact-name') Name
+        input.form-control#contact-name(value='Kevin Dela Rosa')
+        
+      div.form-group
+        label(for='twitter-username') Twitter Username
+        div.input-group
+          span.input-group-addon @      
+          input.form-control#twitter-username(value='kevd1337')
+          
+      div.form-group
+        label(for='memo') Memo
+        textarea.form-control#memo engineer @ amazon, carnegie mellon alum, former researcher, song-writer/guitarist, occasional music hacker. fan of hip-hop, punk, star trek, comics & comedy.
+        
+      div.form-group
+        label(for='tags') Tags
+        br
+        input.form-control#tags(value='SXSW,Seattle,Start-ups', data-role='tagsinput')
+        
+      div.form-group
+        button.btn.btn-default Cancel
+        | &nbsp; &nbsp;
+        button.btn.btn-primary(type='submit') Submit
