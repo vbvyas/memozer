@@ -1,19 +1,29 @@
 extends layout
 
 block content
-  // TODO add user logged in related logic (redirect to login page if not logged in)
-  h2 memozer  
-  p organize your life
-  div.list-group
-    a.list-group-item(href='/sn/search')
-      span.fa.fa-plus &nbsp;
-      | New contact
-    a.list-group-item(href='/contacts')
-      span.fa.fa-users &nbsp;
-      | Contacts
-      span.badge &nbsp; 99 + &nbsp;
-    a.list-group-item(href='/followups')
-      span.glyphicon.glyphicon-list &nbsp;
-      | Follow-ups
-      span.badge &nbsp; 5 &nbsp; 
-            
+  if(user)
+    h3 Welcome back &nbsp;
+      span.text-primary #{user.username}
+    p organize your life
+    div.list-group
+      a.list-group-item(href='/sn/search')
+        span.fa.fa-plus &nbsp;
+        | New contact
+      a.list-group-item(href='/contacts')
+        span.fa.fa-users &nbsp;
+        | Contacts
+        span.badge &nbsp; 99 + &nbsp;
+      a.list-group-item(href='/followups')
+        span.glyphicon.glyphicon-list &nbsp;
+        | Follow-ups
+        span.badge &nbsp; 5 &nbsp; 
+  else
+    .text-center.row
+      h3 Welcome to memozer
+      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel odio ut enim venenatis pellentesque pretium a justo. Fusce gravida orci eu sollicitudin viverra. Quisque eget rhoncus augue, non volutpat purus.           
+    br 
+    p.text-center.row 
+      strong Login via Twitter below to get started.
+    .text-center.row
+      a(href="/auth/twitter")
+        img(src="/img/sign-in-with-twitter-l.png")    

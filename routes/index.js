@@ -1,8 +1,10 @@
-
 /*
  * GET home page.
  */
 
-exports.index = function(req, res){
-  res.render('index', { title: 'memozer' });
+exports.index = function(req, res) {
+	res.render('index', {
+		title : 'memozer',
+		user : req.user
+	});
 };
