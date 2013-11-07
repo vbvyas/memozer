@@ -39,6 +39,7 @@ app.get('/sn/q', socialnetwork.search_results);
 app.get('/contacts', contacts.list);
 app.get('/contact', contacts.show);
 app.get('/followups', followups.list);
+app.get('/followup', followups.show);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
