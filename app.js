@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -8,6 +7,7 @@ var express = require('express')
   , socialnetwork = require('./routes/socialnetwork')
   , contacts = require('./routes/contacts')
   , followups = require('./routes/followups')
+  , twit = require('./api/twit')
   , http = require('http')
   , path = require('path');
 
@@ -41,4 +41,9 @@ app.get('/followups', followups.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+// EXAMPLE ON HOW TO USE THE TWITTER API TO RETURN USERS
+twit.search('kevin', function(res) {
+  console.log(res);
 });
