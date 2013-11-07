@@ -13,3 +13,9 @@ exports.show = function(req, res) {
 		title : 'memozer | contact'
 	});
 };
+
+exports.edit = function(req, res) {
+	res.render('contact_edit', {
+		title : 'memozer | contact edit'
+	});
+};
