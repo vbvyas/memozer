@@ -10,23 +10,12 @@ exports.requiresLogin = function(req, res, next) {
 	next()
 }
 
-exports.user = {
+exports.contact = {
 	hasAuthorization : function(req, res, next) {
-		if (req.profile.id != req.user.id) {
+		if (req.contact.user.id != req.user.id) {
 			req.flash('info', 'You are not authorized')
-			return res.redirect('/users/' + req.profile.id)
+			return res.redirect('/contacts/' + req.contact.id)
 		}
 		next()
 	}
 }
-
-//
-// exports.project = {
-// hasAuthorization : function(req, res, next) {
-// if (req.project.user.id != req.user.id) {
-// req.flash('info', 'You are not authorized')
-// return res.redirect('/projects/' + req.project.id)
-// }
-// next()
-// }
-// }

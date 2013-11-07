@@ -2,19 +2,21 @@ extends layout
 
 block content
   h3 Lookup person by Twitter handle
-  div.input-group
-    span.input-group-addon @
-    input.form-control(type='text', placeholder='twitter username')
-  h2.text-center - or -
-  h3 Search for a person by name
-  div.input-group
-    span.input-group-addon 
-      span.glyphicon.glyphicon-user
-    input.form-control(type='text', placeholder='person\'s name')
-  br
-  div.text-center
-    a.btn.btn-default(href="/sn/q") Lookup &nbsp;
-      span.fa.fa-search
+  form(action='/sn/q')
+    div.input-group
+      span.input-group-addon @
+      input.form-control#twitter(type='text', placeholder='twitter username', name='twitter')
+    h2.text-center - or -
+    h3 Search for a person by name
+    div.input-group
+      span.input-group-addon 
+        span.glyphicon.glyphicon-user
+      input.form-control#name(type='text', placeholder='person\'s name', name='name')
+    br
+    div.text-center
+      button.btn.btn-default(type="submit") Lookup &nbsp;
+        span.fa.fa-search
+  
   br        
   ul.pager
     li.previous 
