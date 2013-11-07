@@ -15,3 +15,10 @@ exports.search = function(query, callback) {
     callback(reply);
   });
 }
+
+exports.search_handle = function(query, callback) {
+  t.get('users/lookup', { screen_name: query }, function(err, reply) {
+    if (err) callback([]);
+    callback(reply);
+  });
+}

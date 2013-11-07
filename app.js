@@ -37,15 +37,13 @@ app.get('/sn/search', socialnetwork.search);
 app.get('/sn/q', socialnetwork.search_results);
 //app.get('/sn/search_result', socialnetwork.search_result);
 app.get('/contacts', contacts.list);
-app.get('/contact', contacts.show);
 app.get('/followups', followups.list);
-app.get('/followup', followups.show);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
 // EXAMPLE ON HOW TO USE THE TWITTER API TO RETURN USERS
-twit.search('kevin', function(res) {
+twit.search_handle('kevd1337', function(res) {
   console.log(res);
 });
