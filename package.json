@@ -12,7 +12,6 @@
   "dependencies": {
     "express": "latest",
     "jade": "latest",
-    "stylus": "latest",
     "twit": "latest",
     "mongoose": "latest",
     "connect-mongo": "latest",
