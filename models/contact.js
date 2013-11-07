@@ -36,7 +36,7 @@ var ContactSchema = new Schema({
 	  name: {type : String, default : '', trim : true},
 	  lat: {type : Number},
 	  lng: {type : Number},
-  }
+  },
   tags: {type: [], get: getTags, set: setTags},
   createdAt  : {type : Date, default : Date.now}
 })
@@ -89,7 +89,7 @@ ContactSchema.statics = {
 
     this.find(criteria)
       .populate('user', 'name username')
-      .sort('name'})
+      .sort('name')
       .limit(options.perPage)
       .skip(options.perPage * options.page)
       .exec(cb)

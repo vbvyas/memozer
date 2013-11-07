@@ -82,34 +82,6 @@ app.use(function(req, res, next){
   next()
 })
 
-//// assume "not found" in the error msgs
-//// is a 404. this is somewhat silly, but
-//// valid, you can do whatever you like, set
-//// properties, use instanceof etc.
-//app.use(function(err, req, res, next){
-//  // treat as 404
-//  if (err.message
-//    && (~err.message.indexOf('not found')
-//    || (~err.message.indexOf('Cast to ObjectId failed')))) {
-//    return next()
-//  }
-//
-//  // log it
-//  // send emails if you want
-//  console.error(err.stack)
-//
-//  // error page
-//  res.status(500).render('500', { error: err.stack })
-//})
-//
-//// assume 404 since no middleware responded
-//app.use(function(req, res, next){
-//  res.status(404).render('404', {
-//    url: req.originalUrl,
-//    error: 'Not found'
-//  })
-//})
-
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -152,6 +124,12 @@ app.get('/auth/twitter', passport.authenticate('twitter', {
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {
 	failureRedirect : '/login'
 }), users.authCallback)
+
+app.use(function(req, res, next){
+  res.status(404).render('404', {
+    url: req.originalUrl
+  })
+})
 
 app.param('userId', users.user)
 
