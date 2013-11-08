@@ -30,6 +30,12 @@ var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
+app.use(express.compress({
+    filter: function (req, res) {
+      return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
+    },
+    level: 9
+  }))
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -37,6 +43,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
+
 // express/mongo session storage
 app.use(express.session({
 	secret : 'noobjs',
@@ -80,15 +87,17 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 
 // Social network routes
-app.get('/sn/search', socialnetwork.search);
-app.get('/sn/q', socialnetwork.search_results);
+app.get('/sn/search', auth.requiresLogin, socialnetwork.search);
+app.get('/sn/q', auth.requiresLogin, socialnetwork.search_results);
 
 // Contacts routes
-app.get('/contacts', contacts.list);
+app.get('/contacts', auth.requiresLogin, contacts.list);
 app.get('/contacts/new', auth.requiresLogin, contacts.new);
 app.post('/contacts', auth.requiresLogin, contacts.create);
-app.get('/contact', contacts.show);
-app.get('/contact/edit', contacts.edit);
+app.get('/contacts/:twitter_sn', auth.requiresLogin, contacts.show);
+app.get('/contacts/:twitter_sn/edit', auth.requiresLogin, contacts.edit);
+app.put('/contacts/:twitter_sn', auth.requiresLogin, contacts.update);
+app.del('/contacts/:twitter_sn', auth.requiresLogin, contacts.destroy);
 
 // Follow-ups routes
 app.get('/followups', followups.list);

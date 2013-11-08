@@ -2,7 +2,7 @@ extends layout
 
 block content
   - var action = '/contacts'
-  - action += contact.isNew? '' : '/' + contact.id
+  - action += contact.isNew? '' : '/' + contact.twitterUsername
   
   br
   form(role='form', method='post', action=action)
@@ -37,6 +37,6 @@ block content
         input.form-control#tags(name='tags', value=contact.tags, data-role='tagsinput')
         
       div.form-group
-        a.btn.btn-default(href='/sn/search') Cancel
+        a.btn.btn-default(href='/') Cancel
         | &nbsp; &nbsp;
         button.btn.btn-primary(type='submit') Submit

@@ -61,15 +61,11 @@ ContactSchema.statics = {
   /**
 	 * Find Contact by id
 	 * 
-	 * @param {ObjectId}
-	 *            id
-	 * @param {Function}
-	 *            cb
 	 * @api private
 	 */
 
-  load: function (id, cb) {
-    this.findOne({ _id : id })
+  load: function (user, contactTwitterUsername, cb) {
+    this.findOne({ user: user, twitterUsername : contactTwitterUsername })
       .populate('user', 'name username')
       .exec(cb)
   },

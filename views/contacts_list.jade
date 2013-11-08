@@ -6,9 +6,13 @@ block content
     each contact in contacts
       hr
       div.row
-        div.col-md-1.col-xs-2
+        div.col-md-1.col-xs-2        
           a(href="/contacts/#{contact.twitterUsername}")
-            img(src='#{contact.profileImageUrl}')
+            if(contact.profileImageUrl)
+              img(src='#{contact.profileImageUrl}')
+            else
+              img(src='/img/default_profile.png')
+              
         div.col-md-9.col-xs-5.text-left
           strong #{contact.name}
           br

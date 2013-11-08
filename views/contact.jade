@@ -1,33 +1,33 @@
 extends layout
 
 block content
-  h2 Kevin Dela Rosa
+  h2 #{contact.name}
   div.row
     div.col-md-1.col-xs-2
-      a(href="#")
-        img(src='https://pbs.twimg.com/profile_images/3235866251/3e1c20e93a58acc8426964760436d80f_normal.jpeg')
+      img(src='#{contact.profileImageUrl}')
     div.col-md-9.col-xs-5.text-left
-      a.btn.btn-primary(href='#')         
+      a.btn.btn-primary(href='http://twitter.com/#{contact.twitterUsername}', target='_BLANK')         
         strong @kevd1337 &nbsp;
         span.fa.fa-twitter
     div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
+      a.btn.btn-primary(href='/followups/#{contact.twitterUsername}') 
         span.glyphicon.glyphicon-list
     div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='/contact/edit') 
+      a.btn.btn-primary(href='/contacts/#{contact.twitterUsername}/edit') 
         span.glyphicon.glyphicon-edit     
   hr 
-  p  engineer @ amazon, carnegie mellon alum, former researcher, song-writer/guitarist, occasional music hacker. fan of hip-hop, punk, star trek, comics & comedy.
+  if(contact.memo)
+    p!=  contact.memo.replace(/</g, "&lt;").replace(/>/g, '&gt;').replace(/\n/g, '<br />')
+  else
+    p You have no notes on this person
   hr           
   div
-    span.label.label-info SXSW
-    | &nbsp;
-    span.label.label-info Seattle
-    | &nbsp;
-    span.label.label-info Start-ups
-    |  &nbsp;
+    each tag in contact.tags.split(',')
+      span.label.label-info #{tag}
+      | &nbsp;
+
   br
-  p.text-primary Added 5 days ago
+  p.text-primary Added #{ago}
   br        
   ul.pager
     li.previous 
