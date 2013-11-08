@@ -30,7 +30,7 @@ block content
   p.text-primary Added #{ago}
   br        
   - var action = '/contacts/' + contact.twitterUsername
-  form.center.form-inline.confirm(action=action, method="post")
+  form.text-center.form-inline.confirm(action=action, method="post")
     input(type='hidden', name='_csrf', value="#{csrf_token}")
     input(type="hidden", name="_method", value="DELETE")
     button.btn.btn-danger(type="submit") Delete Contact
