@@ -14,7 +14,7 @@ exports.list = function(req, res) {
 	  var options = {
 	    perPage: perPage,
 	    page: page,
-	    user: req.user
+	    'user.username': req.user.username
 	  }
 	  
 	Contact.list(options, function(err, contacts){

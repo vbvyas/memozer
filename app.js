@@ -40,18 +40,15 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use(express.cookieParser('your secret here'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
 
-// express/mongo session storage
+
+// expresso session storage
 app.use(express.session({
-	secret : 'noobjs',
-	store : new mongoStore({
-		url : config.db,
-		collection : 'sessions'
-	})
-}))
+	secret : 'my war'
+}));
 
 // use passport session
 app.use(passport.initialize())
@@ -68,14 +65,13 @@ if (process.env.NODE_ENV !== 'test') {
 	app.use(express.csrf())
 }
 
-// This could be moved to view-helpers :-)
 app.use(function(req, res, next) {
 	res.locals.csrf_token = req.csrfToken()
 	next()
 })
 
 app.use(app.router);
-app.use(require('stylus').middleware(__dirname + '/public'));
+// app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only

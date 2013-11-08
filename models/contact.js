@@ -65,7 +65,7 @@ ContactSchema.statics = {
 	 */
 
   load: function (user, contactTwitterUsername, cb) {
-    this.findOne({ user: user, twitterUsername : contactTwitterUsername })
+    this.findOne({ 'user.username': user.username, twitterUsername : contactTwitterUsername })
       .populate('user', 'name username')
       .exec(cb)
   },
