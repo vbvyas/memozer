@@ -8,10 +8,28 @@ var mongoose = require('mongoose')
   , utils = require('../lib/utils');
 
 exports.list = function(req, res) {
-	res.render('contacts_list', {
-		title : 'memozer | contacts'
+	  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
+	  var perPage = 30;
+	  var options = {
+	    perPage: perPage,
+	    page: page,
+	    user: req.user
+	  }
+	  
+	Contact.list(options, function(err, contacts){
+		if(err) return res.render('500');
+		console.log(contacts)
+		Contact.count().exec(function (err, count){								
+			res.render('contacts_list', {
+				title : 'memozer | contacts',
+				contacts: contacts,
+				page: page + 1,
+				pages: Math.ceil(count / perPage)
+				});	
+			}
+		);
 	});
-};
+}
 
 exports.show = function(req, res) {
 	res.render('contact', {

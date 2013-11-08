@@ -6,7 +6,8 @@ block content
   
   br
   form(role='form', method='post', action=action)
-    input(type="hidden", name="_csrf", value="#{csrf_token}")    
+    input(type="hidden", name="_csrf", value="#{csrf_token}")
+    input(type="hidden", name="profileImageUrl", value="#{contact.profileImageUrl}")    
     
     - if (!contact.isNew)
       input(type="hidden", name="_method", value="PUT")

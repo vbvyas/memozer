@@ -1,36 +1,28 @@
 extends layout
 
 block content
-  br
-  div.row
-    div.col-md-1.col-xs-2
-      a(href="/contact")
-        img(src='https://pbs.twimg.com/profile_images/3235866251/3e1c20e93a58acc8426964760436d80f_normal.jpeg')
-    div.col-md-9.col-xs-5.text-left
-      strong Kevin Dela Rosa
-      br
-      | @kevd1337
-    div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.glyphicon.glyphicon-list
-    div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.fa.fa-twitter        
-  hr
-  div.row
-    div.col-md-1.col-xs-2
-      a(href="/contact")
-        img(src='https://pbs.twimg.com/profile_images/378800000277825917/70ffbc17c3696eb59552a584a193b0df_normal.jpeg')
-    div.col-md-9.col-xs-5.text-left
-      strong Vinay Viyas
-      br
-      | @vbvyas
-    div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.glyphicon.glyphicon-list
-    div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.fa.fa-twitter     
+  if(contacts)
+    h3 My Contacts
+    each contact in contacts
+      hr
+      div.row
+        div.col-md-1.col-xs-2
+          a(href="/contacts/#{contact.twitterUsername}")
+            img(src='#{contact.profileImageUrl}')
+        div.col-md-9.col-xs-5.text-left
+          strong #{contact.name}
+          br
+          | #{contact.twitterUsername}
+        div.col-md-1.col-xs-2
+          a.btn.btn-primary(href='/followups/#{contact.twitterUsername}') 
+            span.glyphicon.glyphicon-list
+        div.col-md-1.col-xs-2
+          a.btn.btn-primary(href='http://twitter.com/#{contact.twitterUsername}', target='_BLANK') 
+            span.fa.fa-twitter        
+
+  else
+    h3 No contacts found
+    p.text-info Get out there and make some connections!
 
   br        
   ul.pager
