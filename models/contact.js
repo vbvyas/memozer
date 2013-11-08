@@ -28,9 +28,10 @@ var setTags = function (tags) {
 
 var ContactSchema = new Schema({
   name: {type : String, default : '', trim : true},
-  twitterUsername: {type : String, default : '', trim : true},
+  username: {type : String, default : '', trim : true}, // of contacts owner
+  twitterUsername: {type : String, default : '', trim : true}, // of contact
   memo: {type : String, default : '', trim : true},
-  user: {type : Schema.ObjectId, ref : 'User'},
+// user: {type : Schema.ObjectId, ref : 'User'},
   profileImageUrl: {type : String, default : '', trim : true},
   connectionLocation:{ // location that user met connection
 	  name: {type : String, default : '', trim : true},
@@ -45,6 +46,10 @@ var ContactSchema = new Schema({
  * Validations
  */
 ContactSchema.path('name').validate(function (title) {
+  return title.length > 0
+}, 'name cannot be blank')
+
+ContactSchema.path('username').validate(function (title) {
   return title.length > 0
 }, 'name cannot be blank')
 
@@ -64,11 +69,20 @@ ContactSchema.statics = {
 	 * @api private
 	 */
 
-  load: function (user, contactTwitterUsername, cb) {
-    this.findOne({ 'user.username': user.username, twitterUsername : contactTwitterUsername })
-      .populate('user', 'name username')
-      .exec(cb)
-  },
+// load: function (username, contactTwitterUsername, cb) {
+// console.log('LOAD CALLED WITH ' + username);
+// this.findOne({ username: username, twitterUsername : contactTwitterUsername
+// })
+// // .populate('user', 'name username')
+// .exec(cb)
+// },
+	  load: function (username, contactTwitterUsername, cb) {
+		  console.log('LOAD CALLED WITH ' + username + '|' + contactTwitterUsername);
+// console.log({ username: username, twitterUsername: contactTwitterUsername});
+	      this.find({ username: username, twitterUsername: contactTwitterUsername})
+	     .limit(1)
+	     .exec(cb)  
+	  },	
 
   /**
 	 * List contacts
@@ -82,9 +96,9 @@ ContactSchema.statics = {
 
   list: function (options, cb) {
     var criteria = options.criteria || {}
-
+// console.log('LIST CRITERIA- ' + criteria.twitterUsername);
     this.find(criteria)
-      .populate('user', 'name username')
+// .populate('user', 'name username')
       .sort('name')
       .limit(options.perPage)
       .skip(options.perPage * options.page)

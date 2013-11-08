@@ -1,9 +1,9 @@
 extends layout
 
 block content
-  if(user)
+  if(username)
     h3 Welcome back &nbsp;
-      span.text-primary #{user.username}
+      span.text-primary #{username}
     p organize your life
     div.list-group
       a.list-group-item(href='/sn/search')

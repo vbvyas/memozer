@@ -5,13 +5,14 @@
 var mongoose = require('mongoose'), Contact = mongoose.model('Contact');
 
 exports.index = function(req, res) {
+	var username = req.user ? req.user.username : null;
 	Contact.count({
-		user : req.user
+		username : username
 	}, function(err, contactCounts) {
 		
 		res.render('index', {
-			title : 'memozer',
-			user : req.user,
+			title : 'memozer | home',
+			username : username,
 			contactCounts : contactCounts
 		});
 	});

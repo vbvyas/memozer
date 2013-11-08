@@ -1,6 +1,6 @@
 module.exports = {
 	development : {
-		db : 'mongodb://localhost/memozer_dev_2',
+		db : 'mongodb://localhost/memozer_dev',
 		twitter : {
 			clientID : process.env.TWITTER_CONSUMER_KEY,
 			clientSecret : process.env.TWITTER_CONSUMER_SECRET,
@@ -12,7 +12,7 @@ module.exports = {
 	},
 	production : {
 		db : process.env.MONGOLAB_URI || process.env.MONGOHQ_URL
-				|| 'mongodb://localhost/memozer_2',
+				|| 'mongodb://localhost/memozer',
 		twitter : {
 			clientID : process.env.TWITTER_CONSUMER_KEY,
 			clientSecret : process.env.TWITTER_CONSUMER_SECRET,

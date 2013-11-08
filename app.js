@@ -90,7 +90,7 @@ app.get('/sn/q', auth.requiresLogin, socialnetwork.search_results);
 app.get('/contacts', auth.requiresLogin, contacts.list);
 app.get('/contacts/new', auth.requiresLogin, contacts.new);
 app.post('/contacts', auth.requiresLogin, contacts.create);
-app.get('/contacts/:twitter_sn', auth.requiresLogin, contacts.show);
+app.get('/contacts/:twitter', auth.requiresLogin, contacts.show);
 app.get('/contacts/:twitter_sn/edit', auth.requiresLogin, contacts.edit);
 app.put('/contacts/:twitter_sn', auth.requiresLogin, contacts.update);
 app.del('/contacts/:twitter_sn', auth.requiresLogin, contacts.destroy);

@@ -6,7 +6,8 @@ var mongoose = require('mongoose')
   , Contact = mongoose.model('Contact')
   , _ = require('underscore')
   , utils = require('../lib/utils')
-  , moment = require('moment');
+  , moment = require('moment')
+  ,util = require('util');
 
 exports.list = function(req, res) {
 	  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
@@ -14,10 +15,12 @@ exports.list = function(req, res) {
 	  var options = {
 	    perPage: perPage,
 	    page: page,
-	    'user.username': req.user.username
+	    criteria: {username: req.user.username}
 	  }
 	  
 	Contact.list(options, function(err, contacts){
+		console.log('LOAD RETURNED...');
+		console.log(contacts);		
 		if(err) return res.render('500');
 		
 		Contact.count().exec(function (err, count){								
@@ -30,12 +33,17 @@ exports.list = function(req, res) {
 			}
 		);
 	});
-}
+};
 
 exports.show = function(req, res) {
-	var contactTwitterUsername = req.params.twitter_sn;		
-	
-	Contact.load(req.user, contactTwitterUsername, function(err, contact){
+	var contactTwitterUsername = req.param('twitter');		
+// console.log("REQ: " + req.params);
+// console.log(util.inspect(req.params, false, null));
+	console.log('t:  ' + contactTwitterUsername);
+	Contact.load(req.user.username, contactTwitterUsername, function(err, contacts){
+		var contact = contacts[0];
+		console.log('LOAD RETURNED');
+		console.log(contact);
 		if(err) return res.render('500');
 		
 		if (contact.createdAt){
@@ -77,7 +85,7 @@ exports.new = function(req, res) {
 
 exports.create = function (req, res) {
 	  var contact = new Contact(req.body);	  
-	  contact.user = req.user;
+	  contact.username = req.user.username;
 	  
 	  console.log('saving contact: ' + contact);
 
@@ -98,9 +106,10 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
 	var contactTwitterUsername = req.params.twitter_sn;		
 	
-	Contact.load(req.user, contactTwitterUsername, function(err, contact){
+	Contact.load(req.user.username, contactTwitterUsername, function(err, contacts){
 		if(err) return res.render('500');
 	
+		var contact = contacts[0];
 		console.log('updating contact: ' + contact);
 		contact = _.extend(contact, req.body);
 		
@@ -122,9 +131,10 @@ exports.update = function (req, res) {
 exports.edit = function(req, res) {
 	var contactTwitterUsername = req.params.twitter_sn;		
 	
-	Contact.load(req.user, contactTwitterUsername, function(err, contact){
+	Contact.load(req.user.username, contactTwitterUsername, function(err, contacts){
 		if(err) return res.render('500');		
 		
+		var contact = contacts[0];
 		res.render('contact_edit', {
 			title : 'memozer | edit contact',
 			contact: contact
@@ -135,9 +145,9 @@ exports.edit = function(req, res) {
 exports.destroy = function(req, res){
 	var contactTwitterUsername = req.params.twitter_sn;		
 	
-	Contact.load(req.user, contactTwitterUsername, function(err, contact){
+	Contact.load(req.user.username, contactTwitterUsername, function(err, contacts){
 		if(err) return res.render('500');		
-		
+		var contact = contacts[0];
 	    contact.remove(function(err){
 	    	res.redirect('/contacts');
 	  });
