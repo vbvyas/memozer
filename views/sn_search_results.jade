@@ -9,14 +9,13 @@ block content
       hr
       div.row
         div.col-md-1.col-xs-2
-          a(href="/contact/add/#{result.screen_name}")
-            img(src='#{result.profile_image_url}')
+          img(src='#{result.profile_image_url}')
         div.col-md-9.col-xs-7.text-left
           strong #{result.name}
           br
           spna.info #{result.screen_name}
         div.col-md-2.col-xs-2
-          a.btn.btn-primary(href='/contact/add/#{result.screen_name}') 
+          a.btn.btn-primary(href='#{result.quick_add_link}') 
             span.fa.fa-plus &nbsp;
             span.glyphicon.glyphicon-user
         
@@ -26,4 +25,4 @@ block content
   br        
   ul.pager
     li.previous 
-      a(href="/sn/search") &larr; &nbsp; New Search    
+      a(href="/sn/search") &larr; &nbsp; New Search

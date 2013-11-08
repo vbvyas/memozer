@@ -32,7 +32,7 @@ var ContactSchema = new Schema({
   memo: {type : String, default : '', trim : true},
   user: {type : Schema.ObjectId, ref : 'User'},
   profileImageUrl: {type : String, default : '', trim : true},
-  connectionLocation:{
+  connectionLocation:{ // location that user met connection
 	  name: {type : String, default : '', trim : true},
 	  lat: {type : Number},
 	  lng: {type : Number},

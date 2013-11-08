@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  - var action = '/contacts'
+  - action += contact.isNew? '' : '/' + contact.id
+  
+  br
+  form(role='form', method='post', action=action)
+    input(type="hidden", name="_csrf", value="#{csrf_token}")    
+    
+    - if (!contact.isNew)
+      input(type="hidden", name="_method", value="PUT")
+          
+    fieldset
+      legend Editing "
+        span.text-info #{contact.name}
+        | "
+      
+      div.form-group
+        label(for='name') Name
+        input.form-control#name(name='name', value=contact.name)
+        
+      div.form-group
+        label(for='twitterUsername') Twitter Username
+        div.input-group
+          span.input-group-addon @      
+          input.form-control#twitterUsername(name='twitterUsername', value=contact.twitterUsername, readonly)
+          
+      div.form-group
+        label(for='memo') Memo
+        textarea.form-control#memo(name='memo') #{contact.memo}
+        
+      div.form-group
+        label(for='tags') Tags
+        br
+        input.form-control#tags(name='tags', value=contact.tags, data-role='tagsinput')
+        
+      div.form-group
+        a.btn.btn-default(href='/sn/search') Cancel
+        | &nbsp; &nbsp;
+        button.btn.btn-primary(type='submit') Submit

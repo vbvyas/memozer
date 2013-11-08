@@ -3,6 +3,7 @@
  */
 
 var twit = require('../api/twit');
+var querystring = require("querystring");
 
 exports.search = function(req, res) {
 	res.render('sn_search', {
@@ -49,9 +50,11 @@ function parseTwitterUserSerchResults(searchResponse) {
 		result.name = searchResponse[i].name;
 		result.screen_name = searchResponse[i].screen_name;
 		result.profile_image_url = searchResponse[i].profile_image_url;
-
+		result.description = searchResponse[i].description;
+		var quick_add_link = '/contacts/new?' + querystring.stringify(result);
+		result.quick_add_link = quick_add_link;
 		// TODO some hook in case already a contact
-		
+
 		results.push(result);
 	}
 

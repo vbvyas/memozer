@@ -2,11 +2,7 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , passport = require('passport')
-  , fs = require('fs')
-  , http = require('http')
-  , path = require('path');
+var express = require('express'), passport = require('passport'), fs = require('fs'), http = require('http'), path = require('path');
 
 // Load configurations
 // if test env, load example file
@@ -22,24 +18,13 @@ fs.readdirSync(models_path).forEach(function(file) {
 		require(models_path + '/' + file)
 })
 
-//bootstrap passport config
+// bootstrap passport config
 require('./config/passport')(passport, config)
 
 // Bootstrap routes
-var socialnetwork = require('./routes/socialnetwork')
-  , contacts = require('./routes/contacts')
-  , followups = require('./routes/followups')
-  , users = require('./routes/users')
-  , twit = require('./api/twit')
-  , auth = require('./middlewares/authorization')
-  , routes = require('./routes');
+var socialnetwork = require('./routes/socialnetwork'), contacts = require('./routes/contacts'), followups = require('./routes/followups'), users = require('./routes/users'), twit = require('./api/twit'), auth = require('./middlewares/authorization'), routes = require('./routes');
 
-var  mongoStore = require('connect-mongo')(express)
-  , flash = require('connect-flash')
-  , helpers = require('view-helpers')
-  , pkg = require('./package.json');
-
-//var projectAuth = [auth.requiresLogin, auth.project.hasAuthorization]
+var mongoStore = require('connect-mongo')(express), flash = require('connect-flash'), helpers = require('view-helpers'), pkg = require('./package.json');
 
 var app = express();
 
@@ -54,11 +39,11 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 // express/mongo session storage
 app.use(express.session({
-  secret: 'noobjs',
-  store: new mongoStore({
-    url: config.db,
-    collection : 'sessions'
-  })
+	secret : 'noobjs',
+	store : new mongoStore({
+		url : config.db,
+		collection : 'sessions'
+	})
 }))
 
 // use passport session
@@ -73,19 +58,18 @@ app.use(helpers(pkg.name))
 
 // adds CSRF support
 if (process.env.NODE_ENV !== 'test') {
-  app.use(express.csrf())
+	app.use(express.csrf())
 }
 
 // This could be moved to view-helpers :-)
-app.use(function(req, res, next){
-  res.locals.csrf_token = req.csrfToken()
-  next()
+app.use(function(req, res, next) {
+	res.locals.csrf_token = req.csrfToken()
+	next()
 })
 
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 // development only
 if ('development' == app.get('env')) {
@@ -101,6 +85,8 @@ app.get('/sn/q', socialnetwork.search_results);
 
 // Contacts routes
 app.get('/contacts', contacts.list);
+app.get('/contacts/new', auth.requiresLogin, contacts.new);
+app.post('/contacts', auth.requiresLogin, contacts.create);
 app.get('/contact', contacts.show);
 app.get('/contact/edit', contacts.edit);
 
@@ -125,10 +111,10 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter', {
 	failureRedirect : '/login'
 }), users.authCallback)
 
-app.use(function(req, res, next){
-  res.status(404).render('404', {
-    url: req.originalUrl
-  })
+app.use(function(req, res, next) {
+	res.status(404).render('404', {
+		url : req.originalUrl
+	})
 })
 
 app.param('userId', users.user)
@@ -136,8 +122,3 @@ app.param('userId', users.user)
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));
 });
-
-// // EXAMPLE ON HOW TO USE THE TWITTER API TO RETURN USERS
-// twit.search_handle('kevd1337', function(res) {
-// console.log(res);
-// });

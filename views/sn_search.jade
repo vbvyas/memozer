@@ -3,6 +3,7 @@ extends layout
 block content
   h3 Lookup person by Twitter handle
   form(action='/sn/q')
+    input(type="hidden", name="_csrf", value="#{csrf_token}")
     div.input-group
       span.input-group-addon @
       input.form-control#twitter(type='text', placeholder='twitter username', name='twitter')
