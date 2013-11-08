@@ -1,50 +1,29 @@
 extends layout
 
 block content
-  h3 Results for "
-    span.text-info kevin dela rosa
-    | "
-  hr
-  div.row
-    div.col-md-1.col-xs-2
-      a(href="#")
-        img(src='https://pbs.twimg.com/profile_images/3235866251/3e1c20e93a58acc8426964760436d80f_normal.jpeg')
-    div.col-md-9.col-xs-7.text-left
-      strong Kevin Dela Rosa
-      br
-      spna.info @kevd1337
-    div.col-md-2.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.fa.fa-plus &nbsp;
-        span.glyphicon.glyphicon-user
-  hr
-  div.row
-    div.col-md-1.col-xs-2
-      a(href="#")
-        img(src='https://pbs.twimg.com/profile_images/1579069444/qwertyui_normal.jpg')
-    div.col-md-9.col-xs-7.text-left
-      strong mark kevin dela rosa
-      br
-      | @annoyingkevz
-    div.col-md-2.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.fa.fa-plus &nbsp;
-        span.glyphicon.glyphicon-user        
-  hr
-  div.row
-    div.col-md-1.col-xs-2
-      a(href="#")
-        img(src='https://pbs.twimg.com/profile_images/923731349/kevin_normal.jpg')
-    div.col-md-9.col-xs-7.text-left
-      strong Kevin Rose Dela Rosa
-      br
-      | @iamkevinros3
-    div.col-md-2.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.fa.fa-plus &nbsp;
-        span.glyphicon.glyphicon-user
-
+  if(results)  
+    h3 Results for "
+      span.text-info #{query}
+      | "
+    each result in results
+      hr
+      div.row
+        div.col-md-1.col-xs-2
+          a(href="/contact/add/#{result.screen_name}")
+            img(src='#{result.profile_image_url}')
+        div.col-md-9.col-xs-7.text-left
+          strong #{result.name}
+          br
+          spna.info #{result.screen_name}
+        div.col-md-2.col-xs-2
+          a.btn.btn-primary(href='/contact/add/#{result.screen_name}') 
+            span.fa.fa-plus &nbsp;
+            span.glyphicon.glyphicon-user
+        
+  else
+    h3 No contact info found for #{query} 
+    
   br        
   ul.pager
     li.previous 
-      a(href="/sn/search") &larr; &nbsp; New Search
+      a(href="/sn/search") &larr; &nbsp; New Search    
