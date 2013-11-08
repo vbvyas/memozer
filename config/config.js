@@ -18,8 +18,7 @@ module.exports = {
 			clientSecret : process.env.TWITTER_CONSUMER_SECRET,
 			accessToken : process.env.TWITTER_ACCESS_TOKEN,
 			accessTokenSecret : process.env.TWITTER_ACCESS_TOKEN_SECRET,
-			callbackURL : "http://127.0.0.1:" + process.env.PORT
-					+ "/auth/twitter/callback"
+			callbackURL : "http://www.memozer.com/auth/twitter/callback"
 		},
 	},
 }
