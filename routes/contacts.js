@@ -38,7 +38,9 @@ exports.show = function(req, res) {
 	Contact.load(req.user, contactTwitterUsername, function(err, contact){
 		if(err) return res.render('500');
 		
-		var ago = moment(contact.createdAt).fromNow();
+		if (contact.createdAt){
+			var ago = moment(contact.createdAt).fromNow();
+		}
 		
 		res.render('contact', {
 			title : 'memozer | contact',
@@ -131,8 +133,13 @@ exports.edit = function(req, res) {
 };
 
 exports.destroy = function(req, res){
-    var contact = req.contact;
-    contact.remove(function(err){
-    	res.redirect('/contacts');
-  });
+	var contactTwitterUsername = req.params.twitter_sn;		
+	
+	Contact.load(req.user, contactTwitterUsername, function(err, contact){
+		if(err) return res.render('500');		
+		
+	    contact.remove(function(err){
+	    	res.redirect('/contacts');
+	  });
+	});		
 };
