@@ -6,17 +6,17 @@ var mongoose = require('mongoose')
 module.exports = function(passport, config) {
 	// serialize sessions
 	passport.serializeUser(function(user, done) {
-		done(null, user.id);
-		// done(null, user);
+//		done(null, user.id);
+		 done(null, user);
 	})
 
 	passport.deserializeUser(function(id, done) {
-		User.findOne({
-			_id : id
-		}, function(err, user) {
-			done(err, user)
-		})
-		// done(null, obj);
+//		User.findOne({
+//			_id : id
+//		}, function(err, user) {
+//			done(err, user)
+//		})
+		 done(null, id);
 	})
 
 	// use local strategy

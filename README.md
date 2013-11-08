@@ -23,4 +23,4 @@ Asumming you have [Node.js](http://nodejs.org/) and [Heroku Toolbelt](https://to
   $ foreman start
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+Your app should now be running on [localhost:5000](http://127.0.0.1:5000/).
