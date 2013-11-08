@@ -7,7 +7,7 @@ block content
       img(src='#{contact.profileImageUrl}')
     div.col-md-9.col-xs-5.text-left
       a.btn.btn-primary(href='http://twitter.com/#{contact.twitterUsername}', target='_BLANK')         
-        strong @kevd1337 &nbsp;
+        strong #{contact.twitterUsername} &nbsp;
         span.fa.fa-twitter
     div.col-md-1.col-xs-2
       a.btn.btn-primary(href='/followups/#{contact.twitterUsername}') 
