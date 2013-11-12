@@ -24,7 +24,7 @@ block content
   p!=  followup.description.replace(/</g, "&lt;").replace(/>/g, '&gt;').replace(/\n/g, '<br />')
   hr
   br
-  p.text-primary #{ago}
+  p.text-primary #{created_ago}
   br       
   - var action = '/followups/' + followup.id
   form.text-center.form-inline.confirm(action=action, method="post")
