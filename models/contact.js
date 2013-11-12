@@ -45,16 +45,16 @@ var ContactSchema = new Schema({
 /**
  * Validations
  */
-ContactSchema.path('name').validate(function (title) {
-  return title.length > 0
+ContactSchema.path('name').validate(function (name) {
+  return name.length > 0
 }, 'name cannot be blank')
 
-ContactSchema.path('username').validate(function (title) {
-  return title.length > 0
+ContactSchema.path('username').validate(function (username) {
+  return username.length > 0
 }, 'name cannot be blank')
 
-ContactSchema.path('twitterUsername').validate(function (description) {
-  return description.length > 0
+ContactSchema.path('twitterUsername').validate(function (twitterUsername) {
+  return twitterUsername.length > 0
 }, 'twitterUsername cannot be blank')
 
 

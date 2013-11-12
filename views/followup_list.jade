@@ -1,38 +1,31 @@
 extends layout
 
 block content
-  br
-  div.row
-    div.col-md-1.col-xs-2
-      span.text-primary
-        strong NOV 6
-    div.col-md-1.col-xs-2
-      a(href='#')
-        img(src='https://pbs.twimg.com/profile_images/3235866251/3e1c20e93a58acc8426964760436d80f_normal.jpeg')
-    div.col-md-9.col-xs-5.text-left
-       | get coupon and sync up about SXSW accelerator application
-       br
-       a(href='/followup') [ more ... ]
-    div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.glyphicon.glyphicon-unchecked        
-  hr
-  br
-  div.row
-    div.col-md-1.col-xs-2
-      span.text-primary
-        strong NOV 7
-    div.col-md-1.col-xs-2
-      a(href='#')
-        img(src='https://pbs.twimg.com/profile_images/3235866251/3e1c20e93a58acc8426964760436d80f_normal.jpeg')
-    div.col-md-9.col-xs-5.text-left
-       | buy one million twitter stock units
-       br
-       a(href='/followup') [ more ... ]
-    div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.glyphicon.glyphicon-unchecked
-
+  if(followups.length)
+    h3 Follow-ups
+  each followup in followups
+    hr
+    div.row
+      div.col-md-1.col-xs-2
+        span.text-primary
+          strong #{moment(followup.dueDate).format("MMM D")}
+      div.col-md-1.col-xs-2
+        a(href='/contacts/#{followup.contactUsername}')
+          img(src='#{followup.contactProfileImageUrl}')
+      div.col-md-9.col-xs-5.text-left 
+         p!= followup.description.substr(0, 50) 
+         a(href='/followups/#{followup.id}') [ edit / more ]
+      div.col-md-1.col-xs-2
+        if(followup.isComplete)
+          a.btn.btn-primary(href='#') 
+            span.fa.fa-check-square-o            
+        else
+          a.btn.btn-primary(href='#') 
+            span.glyphicon.glyphicon-unchecked                  
+  else
+    h3 No follow-ups found
+    p.text-info Talk to your peeps and make plans!
+    
   br        
   ul.pager
     li.previous 

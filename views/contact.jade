@@ -10,7 +10,7 @@ block content
         strong #{contact.twitterUsername} &nbsp;
         span.fa.fa-twitter
     div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
+      a.btn.btn-primary(href='/followups/contacts/#{contact.twitterUsername}') 
         span.glyphicon.glyphicon-list
     div.col-md-1.col-xs-2
       a.btn.btn-primary(href='/contacts/#{contact.twitterUsername}/edit') 
@@ -30,12 +30,22 @@ block content
   br
   p.text-primary Added #{ago}
   br        
+  form.text-center.form-inline.confirm(action="/followups/new", method="get")
+    input(type='hidden', name='contact_username', value="#{contact.twitterUsername}")
+    input(type='hidden', name='contact_name', value="#{contact.name}")
+    input(type='hidden', name='contact_profile_image_url', value="#{contact.profileImageUrl}")
+    button.btn.btn-primary(type="submit")      
+      span.glyphicon.glyphicon-list &nbsp;
+      | Follow-up &nbsp;
+      span.glyphicon.glyphicon-plus  
+  br
   - var action = '/contacts/' + contact.twitterUsername
   form.text-center.form-inline.confirm(action=action, method="post")
     input(type='hidden', name='_csrf', value="#{csrf_token}")
     input(type="hidden", name="_method", value="DELETE")
     button.btn.btn-danger(type="submit") Delete Contact
   br      
+  
   ul.pager
     li.previous 
       a(href="/contacts") &larr; &nbsp; Back to Contacts &nbsp;

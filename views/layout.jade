@@ -8,10 +8,12 @@ html
     meta(name='author', content='')
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.css', media='screen')    
     link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')    
-    link(rel='stylesheet', href='/bootstrap-tagsinput/bootstrap-tagsinput.css')
+    // link(rel='stylesheet', href='/bootstrap-tagsinput/bootstrap-tagsinput.css')
+    // link(rel='stylesheet', href='/datepicker/css/datepicker.css')
     link(rel='stylesheet', href='/css/app.css')
     script(src='/javascripts/google.js')
     script(src='/javascripts/mixpanel.js')
+    script(src='/javascripts/jquery-1.10.2.min.js')
     //
        Le HTML5 shim, for IE6-8 support of HTML5 elements
     //if lt IE 9
@@ -33,7 +35,7 @@ html
               li
                 a(href='/contacts') Contacts
               li
-                a(href='#') Follow-ups            
+                a(href='/followups') Follow-ups            
               li              
                 a(href='/logout', title='logout') Logout
             else
@@ -42,7 +44,7 @@ html
 
     div.container
       block content
-    
-    script(src='/javascripts/jquery-1.10.2.min.js')  
+          
     script(src='/bootstrap/js/bootstrap.min.js')
-    script(src='/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
+    // script(src='/bootstrap-tagsinput/bootstrap-tagsinput.min.js')
+    // script(src='/datepicker/js/bootstrap-datepicker.js')

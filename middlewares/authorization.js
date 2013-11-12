@@ -12,9 +12,19 @@ exports.requiresLogin = function(req, res, next) {
 
 exports.contact = {
 	hasAuthorization : function(req, res, next) {
-		if (req.contact.user.id != req.user.id) {
+		if (req.contact.username != req.user.username) {
 			req.flash('info', 'You are not authorized')
-			return res.redirect('/contacts/' + req.contact.id)
+			return res.redirect('/contacts/' + req.contact.twitterUsername)
+		}
+		next()
+	}
+}
+
+exports.followup = {
+	hasAuthorization : function(req, res, next) {
+		if (req.followup.username != req.user.username) {
+			req.flash('info', 'You are not authorized')
+			return res.redirect('/followups/' + req.followup.id)
 		}
 		next()
 	}

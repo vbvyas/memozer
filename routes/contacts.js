@@ -1,7 +1,3 @@
-/*
- * GET list of contacts
- */
-
 var mongoose = require('mongoose')
   , Contact = mongoose.model('Contact')
   , _ = require('underscore')
@@ -19,8 +15,8 @@ exports.list = function(req, res) {
 	  }
 	  
 	Contact.list(options, function(err, contacts){
-		console.log('LOAD RETURNED...');
-		console.log(contacts);		
+		// console.log('LOAD RETURNED...');
+		// console.log(contacts);
 		if(err) return res.render('500');
 		
 		Contact.count().exec(function (err, count){								
@@ -39,11 +35,11 @@ exports.show = function(req, res) {
 	var contactTwitterUsername = req.param('twitter');		
 // console.log("REQ: " + req.params);
 // console.log(util.inspect(req.params, false, null));
-	console.log('t:  ' + contactTwitterUsername);
+	// console.log('t: ' + contactTwitterUsername);
 	Contact.load(req.user.username, contactTwitterUsername, function(err, contacts){
 		var contact = contacts[0];
-		console.log('LOAD RETURNED');
-		console.log(contact);
+		// console.log('LOAD RETURNED');
+		// console.log(contact);
 		if(err) return res.render('500');
 		
 		if (contact.createdAt){

@@ -2,30 +2,40 @@ extends layout
 
 block content
   h2 Due: 
-    span.text-info Nov 6
+    span.text-info #{moment(followup.dueDate).format("MMM D")}
   div.row
     div.col-md-1.col-xs-2
-      a(href="#")
-        img(src='https://pbs.twimg.com/profile_images/3235866251/3e1c20e93a58acc8426964760436d80f_normal.jpeg')
+      img(src='#{followup.contactProfileImageUrl}')
     div.col-md-9.col-xs-5.text-left
-      strong Kevin Dela Rosa
-      br         
-      | @kevd1337
+      a.btn.btn-primary(href='http://twitter.com/#{followup.contactUsername}', target='_BLANK')         
+        strong #{followup.contactUsername} &nbsp;
+        span.fa.fa-twitter
     div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
-        span.fa.fa-check-square-o
+      if(followup.isComplete)
+        a.btn.btn-primary(href='#') 
+          span.fa.fa-check-square-o            
+      else
+        a.btn.btn-primary(href='#') 
+          span.glyphicon.glyphicon-unchecked
     div.col-md-1.col-xs-2
-      a.btn.btn-primary(href='#') 
+      a.btn.btn-primary(href='/followups/#{followup.id}/edit') 
         span.glyphicon.glyphicon-edit     
   hr 
-  p  catch up with la luz @ neumos
+  p!=  followup.description.replace(/</g, "&lt;").replace(/>/g, '&gt;').replace(/\n/g, '<br />')
   hr
   br
-  p.text-primary Added 9 days ago
-  br        
+  p.text-primary #{ago}
+  br       
+  - var action = '/followups/' + followup.id
+  form.text-center.form-inline.confirm(action=action, method="post")
+    input(type='hidden', name='_csrf', value="#{csrf_token}")
+    input(type="hidden", name="_method", value="DELETE")
+    button.btn.btn-danger(type="submit") Delete Follow-up
+  br      
+     
   ul.pager
     li.previous 
-      a(href="/contacts") &larr; &nbsp; Back to Follow-ups &nbsp;
+      a(href="/followups") &larr; &nbsp; Back to Follow-ups &nbsp;
         span.glyphicon.glyphicon-list 
 
   script

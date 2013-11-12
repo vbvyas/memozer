@@ -14,10 +14,11 @@ block content
         | Contacts
         if(contactCounts)
           span.badge &nbsp; #{contactCounts} &nbsp;
-      a.list-group-item(href='#')
+      a.list-group-item(href='/followups')
         span.glyphicon.glyphicon-list &nbsp;
         | Follow-ups
-        span.badge &nbsp; 5 &nbsp; 
+        if(followupCounts)
+          span.badge &nbsp; #{followupCounts} &nbsp; 
   else
     .text-center.row
       h3 Welcome to Memozer

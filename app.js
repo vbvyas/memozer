@@ -29,6 +29,7 @@ var mongoStore = require('connect-mongo')(express), flash = require('connect-fla
 var app = express();
 
 // all environments
+app.locals.moment = require('moment');
 app.set('port', process.env.PORT || 3000);
 app.use(express.compress({
     filter: function (req, res) {
@@ -96,8 +97,17 @@ app.put('/contacts/:twitter_sn', auth.requiresLogin, contacts.update);
 app.del('/contacts/:twitter_sn', auth.requiresLogin, contacts.destroy);
 
 // Follow-ups routes
-app.get('/followups', followups.list);
-app.get('/followup', followups.show);
+app.get('/followups', auth.requiresLogin, followups.list);
+app.get('/followups/contacts/:twitter', auth.requiresLogin, followups.contactFollowups);
+app.get('/followups/new', auth.requiresLogin, followups.new);
+app.post('/followups', auth.requiresLogin, followups.create);
+app.get('/followups/:id', auth.requiresLogin, followups.show);
+app.get('/followups/:id/edit', auth.requiresLogin, followups.edit);
+app.put('/followups/:id', auth.requiresLogin, followups.update);
+app.del('/followups/:id', auth.requiresLogin, followups.destroy);
+// TODO: clear follow up
+// TODO: unclear follow up
+// TODO: follow ups for contact
 
 // user routes
 app.get('/login', users.login)

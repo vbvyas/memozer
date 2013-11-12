@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  - var action = '/followups'
+  - action += followup.isNew? '' : '/' + followup.id
+  
+  br
+  form(role='form', method='post', action=action)
+    input(type="hidden", name="_csrf", value="#{csrf_token}")
+    input(type="hidden", name="contactProfileImageUrl", value="#{followup.contactProfileImageUrl}")
+    input(type="hidden", name="contactName", value="#{followup.contactName}")    
+    
+    - if (!followup.isNew)
+      input(type="hidden", name="_method", value="PUT")
+          
+    fieldset
+      legend Editing Follow-up      
+        
+      div.form-group
+        label(for='contactUsername') Contact
+        div.input-group
+          span.input-group-addon @      
+          input.form-control#contactUsername(name='contactUsername', value=followup.contactUsername, readonly)
+          
+      div.form-group
+        label(for='description') Description
+        textarea.form-control#description(name='description') #{followup.description}
+      
+      div.form-group
+        - var dueDateMMDDYYYY = followup.dueDateMMDDYYYY ? followup.dueDateMMDDYYYY : moment().format("MM/DD/YYYY")      
+        label(for='dueDateMMDDYYYY') Due Date (MM/DD/YYYY)
+        dive.input-group
+          span.input-group-addon
+            span.glyphicon.glyphicon-calendar
+          input.form-control#dueDateMMDDYYYY(name='dueDateMMDDYYYY', value=dueDateMMDDYYYY)        
+          // span.input-group-addon#dueDate(data-date=dueDateMMDDYYYY, data-date-format='mm/dd/yy')
+          //  span.glyphicon.glyphicon-calendar
+          //input.form-control#dueDateMMDDYYYY(name='dueDateMMDDYYYY', value=dueDateMMDDYYYY, readonly)
+      
+      div.form-group
+        label(for='isComplete') Done? &nbsp;
+        input.form-control#isComplete(type='checkbox', name='isComplete', checked=followup.isComplete)
+        
+      div.form-group
+        a.btn.btn-default(href='/') Cancel
+        | &nbsp; &nbsp;
+        button.btn.btn-primary(type='submit') Submit
+        
+  // script(src='/javascripts/followup-form.js')
