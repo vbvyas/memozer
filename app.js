@@ -100,13 +100,13 @@ app.del('/contacts/:twitter_sn', auth.requiresLogin, contacts.destroy);
 app.get('/followups', auth.requiresLogin, followups.list);
 app.get('/followups/contacts/:twitter', auth.requiresLogin, followups.contactFollowups);
 app.get('/followups/new', auth.requiresLogin, followups.new);
+app.get('/followups/complete/:id', auth.requiresLogin, followups.setComplete);
+app.get('/followups/incomplete/:id', auth.requiresLogin, followups.setIncomplete);
 app.post('/followups', auth.requiresLogin, followups.create);
 app.get('/followups/:id', auth.requiresLogin, followups.show);
 app.get('/followups/:id/edit', auth.requiresLogin, followups.edit);
 app.put('/followups/:id', auth.requiresLogin, followups.update);
 app.del('/followups/:id', auth.requiresLogin, followups.destroy);
-// TODO: clear follow up
-// TODO: unclear follow up
 // TODO: follow ups for contact
 
 // user routes

@@ -153,6 +153,36 @@ exports.update = function(req, res) {
 	});
 };
 
+exports.setComplete =  function(req, res) {
+	var followup_id = req.param('id');
+
+	Followup.load(followup_id, function(err, followup) {
+		if (err)
+			return res.render('500');
+
+		console.log('setting followup to complete: ' + followup);
+		followup.isComplete = true;
+		followup.save();
+		
+		res.json(200, {success: 'true'});
+	});
+};
+
+exports.setIncomplete =  function(req, res) {
+	var followup_id = req.param('id');
+
+	Followup.load(followup_id, function(err, followup) {
+		if (err)
+			return res.render('500');
+
+		console.log('setting followup to incomplete: ' + followup);
+		followup.isComplete = false;
+		followup.save();
+		
+		res.json(200, {success: 'true'});
+	});
+};
+
 exports.edit = function(req, res) {
 	var followup_id = req.param('id');		
 	

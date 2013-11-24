@@ -12,10 +12,12 @@ block content
         span.fa.fa-twitter
     div.col-md-1.col-xs-2
       if(followup.isComplete)
-        a.btn.btn-primary(href='#') 
+        button.btn.btn-primary.follow-up-unclear
+          input(type='hidden', name='followup-id', value='#{followup.id}')
           span.fa.fa-check-square-o            
       else
-        a.btn.btn-primary(href='#') 
+        button.btn.btn-primary.follow-up-clear
+          input(type='hidden', name='followup-id', value='#{followup.id}') 
           span.glyphicon.glyphicon-unchecked
     div.col-md-1.col-xs-2
       a.btn.btn-primary(href='/followups/#{followup.id}/edit') 
@@ -40,3 +42,5 @@ block content
 
   script
     mixpanel.track("followup");
+
+  script(src='/javascripts/followup-clear.js', type='text/javascript')    
