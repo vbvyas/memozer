@@ -21,6 +21,7 @@ npm-debug.log
 *.log
 *.sql
 *.sqlite
+*.swp
 .DS_Store
 .DS_Store?
 ._*
