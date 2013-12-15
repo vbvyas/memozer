@@ -24,14 +24,15 @@ require('./config/passport')(passport, config)
 // Bootstrap routes
 var socialnetwork = require('./routes/socialnetwork'), contacts = require('./routes/contacts'), followups = require('./routes/followups'), users = require('./routes/users'), twit = require('./api/twit'), auth = require('./middlewares/authorization'), routes = require('./routes');
 
-var mongoStore = require('connect-mongo')(express), flash = require('connect-flash'), helpers = require('view-helpers'), pkg = require('./package.json');
+var MongoStore = require('connect-mongo')(express), flash = require('connect-flash'), helpers = require('view-helpers'), pkg = require('./package.json');
 
 var app = express();
 
 // all environments
 app.locals.moment = require('moment');
 app.set('port', process.env.PORT || 5000);
-// NOT sure what this compress does, but it causes issues with twit.js when an error is
+// NOT sure what this compress does, but it causes issues with twit.js when an
+// error is
 // thrown, and bombs the application
 // app.use(express.compress({
 // filter: function (req, res) {
@@ -50,7 +51,11 @@ app.use(express.methodOverride());
 
 // expresso session storage
 app.use(express.session({
-	secret : 'my war'
+	secret : 'mysuprefuckingsecretestring',
+	  cookie : {
+		    maxAge : 604800 // one week
+		  },
+    store: new MongoStore({url: config.db, collection : 'sessions'})
 }));
 
 // use passport session
