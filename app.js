@@ -30,7 +30,7 @@ var app = express();
 
 // all environments
 app.locals.moment = require('moment');
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 app.use(express.compress({
     filter: function (req, res) {
       return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
@@ -62,9 +62,8 @@ app.use(flash())
 app.use(helpers(pkg.name))
 
 // adds CSRF support
-if (process.env.NODE_ENV !== 'test') {
-	app.use(express.csrf())
-}
+app.use(express.csrf())
+
 
 app.use(function(req, res, next) {
 	res.locals.csrf_token = req.csrfToken()
