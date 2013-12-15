@@ -1,28 +1,30 @@
 {
   "name": "memozer",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "private": true,
   "engine": {
     "node": "0.10.x",
     "npm": "1.2.x"
   },
   "scripts": {
+	"postinstall": "./node_modules/bower/bin/bower install",    	  
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "latest",
-    "jade": "latest",
-    "twit": "latest",
-    "stylus": "latest",
-    "mongoose": "latest",
-    "connect-mongo": "latest",
-    "connect-flash": "latest",
-    "passport": "latest",
-    "passport-local": "latest",
-    "passport-twitter": "latest",
-    "underscore": "latest",
-    "async": "latest",
-    "view-helpers": "latest",
-    "moment": "latest"
+	"async": "0.2.x",
+	"bower": "1.2.x",
+    "connect-flash": "0.1.x",
+    "connect-mongo": "0.4.x",
+    "express": "3.4.x",
+    "jade": "0.35.x",
+    "moment": "2.4.x",
+    "mongoose": "3.8.x",
+    "passport": "0.1.x",
+    "passport-local": "0.1.x",
+    "passport-twitter": "0.1.x",
+    "stylus": "0.41.x",
+    "twit": "1.1.x",
+    "underscore": "1.5.x",
+    "view-helpers": "0.1.x"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "name": "memozer",
+  "version": "0.2.0",
+  "dependencies": {
+    "bootstrap": "3.0.3",
+    "font-awesome": "4.0.3",
+    "jquery": "1.10.2"
+  },
+  "devDependencies": {}
+}

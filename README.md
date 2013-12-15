@@ -16,10 +16,11 @@ memozer assumes that a few environment variables are defined, a list of whom are
 
 ## Running Locally
 
-Asumming you have [Node.js](http://nodejs.org/) and [Heroku Toolbelt](https://toolbelt.heroku.com/) installed on your machine:
+Asumming you have [Node.js](http://nodejs.org/), [Bower](http://bower.io/, ) and [Heroku Toolbelt](https://toolbelt.heroku.com/) installed on your machine:
 
 ```sh
   $ npm install
+  $ bower install
   $ foreman start
 ```
 
