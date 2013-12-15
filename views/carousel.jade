@@ -1,0 +1,25 @@
+.carousel.slide#carousel-main(data-ride='carousel', data-interval='3000')
+  .carousel-inner.centered
+    .item.active
+      img(src='/img/home.jpg', alt='home')
+    .item
+      img(src='/img/contacts.jpg', alt='contacts')
+    .item
+      img(src='/img/search.jpg', alt='search')
+    .item
+      img(src='/img/single_contact.jpg', alt='single_contact')
+    .item
+      img(src='/img/add_followup.jpg', alt='add_followup')
+    .item
+      img(src='/img/single_followup.jpg', alt='single_followup')
+    .item
+      img(src='/img/followups.jpg', alt='followups')
+
+  a.left.carousel-control(href='#carousel-main', data-slide='prev')
+    span.glyphicon.glyphicon-chevron-left
+  a.right.carousel-control(href='#carousel-main', data-slide='next')
+    span.glyphicon.glyphicon-chevron-right
+
+  style(type='text/css').
+    .carousel { width: 250px; height: 460px; }
+    .carousel-inner > .item img { margin: 0 auto; }
