@@ -14,7 +14,7 @@ exports.index = function(req, res) {
 			username : username
 		}, function(err2, contactCounts) {
 			res.render('index', {
-				title : 'memozer | home',
+				title : 'memozer | meet · connect · meet again!',
 				username : username,
 				contactCounts : contactCounts,
 				followupCounts : followupCounts
