@@ -22,16 +22,22 @@ block content
   else
     .text-center.row
       h3 Memozer
-      h4 meet. connect. follow-up
+      h4.text-warning meet. connect. meet again!
       p Convert your casual connections into meaningful follow-ups.
-
+    p.text-center.row 
+      strong Login via Twitter below to get started.
+    .text-center.row
+      a(href="/auth/twitter")
+        img(src="/img/sign-in-with-twitter-gray.png")
+    br
+    .text-center.row
       include carousel
     br 
     p.text-center.row 
       strong Login via Twitter below to get started.
     .text-center.row
       a(href="/auth/twitter")
-        img(src="/img/sign-in-with-twitter-l.png")    
-
+        img(src="/img/sign-in-with-twitter-gray.png")    
+    br
   script.
     mixpanel.track("index");
