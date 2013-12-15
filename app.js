@@ -31,17 +31,19 @@ var app = express();
 // all environments
 app.locals.moment = require('moment');
 app.set('port', process.env.PORT || 5000);
-app.use(express.compress({
-    filter: function (req, res) {
-      return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
-    },
-    level: 9
-  }))
+// NOT sure what this compress does, but it causes issues with twit.js when an error is
+// thrown, and bombs the application
+// app.use(express.compress({
+// filter: function (req, res) {
+// return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
+// },
+// level: 9
+// }))
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 
@@ -78,6 +80,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
+
+// Pretty print html
+app.configure('development', function () {
+    app.locals.pretty = true
+})
+  app.configure('production', function () {
+    app.locals.pretty = true
+})  
 
 // Home
 app.get('/', routes.index);

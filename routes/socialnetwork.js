@@ -43,7 +43,9 @@ function parseTwitterUserSerchResults(searchResponse) {
 	// console.log(searchResponse[0].profile_image_url);
 	// console.log(searchResponse[0].location);
 	// console.log(new Date().getTime());
-
+    if(!searchResponse || searchResponse.length == 0){
+    	return [];
+    }
 	var results = [];
 	for ( var i = 0; searchResponse && i < searchResponse.length; i++) {
 		result = new Object();

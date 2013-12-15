@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  if(results)  
+  if(results && results.length)  
     h3 Results for "
       span.text-info #{query}
       | "
@@ -20,12 +20,14 @@ block content
             span.glyphicon.glyphicon-user
         
   else
-    h3 No contact info found for #{query} 
+    h3 No contact info found for "
+      span.text-info #{query}
+      | " 
     
   br        
   ul.pager
     li.previous 
       a(href="/sn/search") &larr; &nbsp; New Search
 
-  script
+  script.
     mixpanel.track("sn_search_results");
