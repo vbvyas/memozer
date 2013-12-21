@@ -15,10 +15,13 @@ block content
           br
           spna.info #{result.screen_name}
         div.col-md-2.col-xs-2
-          a.btn.btn-primary(href='#{result.quick_add_link}') 
-            span.fa.fa-plus &nbsp;
-            span.glyphicon.glyphicon-user
-        
+          if(result.quick_add_link)
+            a.btn.btn-primary(href='#{result.quick_add_link}') 
+              span.fa.fa-plus &nbsp;
+              span.glyphicon.glyphicon-user
+          else
+            a.btn.btn-danger(href='#{result.contact_link}') 
+              span.glyphicon.glyphicon-user                  
   else
     h3 No contact info found for "
       span.text-info #{query}
