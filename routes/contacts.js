@@ -46,11 +46,20 @@ exports.show = function(req, res) {
 		if (contact.createdAt){
 			var ago = moment(contact.createdAt).fromNow();
 		}
+
+    var locationName = contact.connectionLocation.name;
+
+    var isBlank = function(str) {
+      return (!str || /^\s*$/.test(str));
+    }
+
+    var tweet = util.format("Hey @%s, it was great meeting you%s. Let's meet for coffee!", contact.twitterUsername, isBlank(locationName) ? '' : ' at ' + locationName);
 		
 		res.render('contact', {
 			title : 'memozer | contact',
 			contact: contact,
-			ago: ago
+			ago: ago,
+      tweet: tweet
 		});
 	});
 };
@@ -102,10 +111,9 @@ exports.create = function (req, res) {
 
 	  contact.save(function (err) {
 	    if (!err) {	      
-        var tweet = util.format("@%s and @%s just connected through #memozer", contact.username, contact.twitterUsername);
-        twit.post_tweet(tweet, function (postTweetResponse) {
-          console.log(postTweetResponse);
-        });
+        // TODO: Come up with a better tweet
+        var tweet = util.format("@%s just connected with @%s through @memozerapp www.memozer.com", contact.username, contact.twitterUsername);
+        twit.post_tweet(tweet, contact.connectionLocation); 
 	      return res.redirect('/contacts/' + contact.twitterUsername);
 	    }
 

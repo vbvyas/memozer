@@ -35,9 +35,12 @@ exports.search_handle = function(query, callback) {
 	});
 }
 
-exports.post_tweet = function(tweet) {
+exports.post_tweet = function(tweet, connectionLocation) {
   t.post('statuses/update', {
-    status: tweet
+    status: tweet,
+    lat: connectionLocation.lat,
+    long: connectionLocation.lng,
+    display_coordinates: true
   }, function (err) {
     if (err) {
       console.log("ERROR: " + err);
