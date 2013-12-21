@@ -30,6 +30,18 @@ block content
   br
   p.text-primary Added #{ago}
   br        
+  .text-center
+    a.twitter-share-button(
+      href="https://twitter.com/share",
+      data-related="jasoncosta",
+      data-lang="en",
+      data-size="large",
+      data-count="none",
+      data-url="http://www.memozer.com",
+      data-via="memozerapp",
+      data-text="Hey @#{contact.twitterUsername}, it was great meeting you. Let's meet for coffee!") Tweet
+
+  br
   form.text-center.form-inline.confirm(action="/followups/new", method="get")
     input(type='hidden', name='contact_username', value="#{contact.twitterUsername}")
     input(type='hidden', name='contact_name', value="#{contact.name}")
@@ -53,3 +65,4 @@ block content
 
   script.
     mixpanel.track("contact");
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");

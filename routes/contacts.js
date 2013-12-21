@@ -3,7 +3,8 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
   , utils = require('../lib/utils')
   , moment = require('moment')
-  ,util = require('util');
+  , twit = require('../api/twit')
+  , util = require('util');
 
 exports.list = function(req, res) {
 	  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
@@ -87,6 +88,11 @@ exports.create = function (req, res) {
 
 	  contact.save(function (err) {
 	    if (!err) {	      
+        // TODO: Come up with a better tweet
+        var tweet = util.format("@%s just connected with @%s through @memozerapp www.memozer.com", contact.username, contact.twitterUsername);
+        twit.post_tweet(tweet, function (postTweetResponse) {
+          console.log(postTweetResponse);
+        });
 	      return res.redirect('/contacts/' + contact.twitterUsername);
 	    }
 

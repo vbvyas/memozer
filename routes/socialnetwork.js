@@ -15,7 +15,7 @@ exports.search_results = function(req, res) {
 	if (req.query.twitter) {
 		// Twitter handle specified, do lookup
 		twit.search_handle(req.query.twitter.trim(), function(searchResponse) {
-			results = parseTwitterUserSerchResults(searchResponse);
+			results = parseTwitterUserSearchResults(searchResponse);
 			res.render('sn_search_results', {
 				title : 'memozer | results for "' + req.query.twitter + '"',
 				results : results,
@@ -25,7 +25,7 @@ exports.search_results = function(req, res) {
 	} else {
 		// Person's name specified
 		twit.search(req.query.name, function(searchResponse) {
-			results = parseTwitterUserSerchResults(searchResponse);
+			results = parseTwitterUserSearchResults(searchResponse);
 			res.render('sn_search_results', {
 				title : 'memozer | results for "' + req.query.name + '"',
 				results : results,
@@ -35,7 +35,7 @@ exports.search_results = function(req, res) {
 	}
 };
 
-function parseTwitterUserSerchResults(searchResponse) {
+function parseTwitterUserSearchResults(searchResponse) {
 	// console.log(searchResponse.length);
 	// console.log(searchResponse[0].name);
 	// console.log(searchResponse[0].screen_name);
