@@ -36,8 +36,33 @@ block content
         //br
         input.form-control#tags(name='tags', value=contact.tags)
         //input.form-control#tags(name='tags', value=contact.tags, data-role='tagsinput')
+
+      div.form-group
+        label(for='connectionLocation.name') Location name
+        input.form-control#connectionLocationName(name='connectionLocation.name')
+
+      div.form-group
+        input#lat(type='hidden', name='connectionLocation.lat')
+        input#lng(type='hidden', name='connectionLocation.lng')
+        a.btn.btn-danger#location(href='#')
+          span.glyphicon.glyphicon-map-marker
+          span#inner(style='padding-left: 0.5em') Get location
         
       div.form-group
         a.btn.btn-default(href='/') Cancel
         | &nbsp; &nbsp;
         button.btn.btn-primary(type='submit') Submit
+  
+  script.
+    $('a#location').click(function() {
+      if (navigator.geolocation){
+        $('a#location').removeClass('btn-danger').addClass('btn-success');
+        $('span#inner').html('Location acquired');
+        navigator.geolocation.getCurrentPosition(function (position){
+          $('input#lat').val(position.coords.latitude);
+          $('input#lng').val(position.coords.longitude);
+        });
+      } else {
+        $('span#inner').html('Unable to locate');
+      }
+    });
