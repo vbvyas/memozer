@@ -46,11 +46,20 @@ exports.show = function(req, res) {
 		if (contact.createdAt){
 			var ago = moment(contact.createdAt).fromNow();
 		}
+
+    var locationName = contact.connectionLocation.name;
+
+    var isBlank = function(str) {
+      return (!str || /^\s*$/.test(str));
+    }
+
+    var tweet = util.format("Hey @%s, it was great meeting you%s. Let's meet for coffee!", contact.twitterUsername, isBlank(locationName) ? '' : ' at ' + locationName);
 		
 		res.render('contact', {
 			title : 'memozer | contact',
 			contact: contact,
-			ago: ago
+			ago: ago,
+      tweet: tweet
 		});
 	});
 };
