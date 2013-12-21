@@ -26,43 +26,61 @@ block content
         div.input-group
           span.input-group-addon @      
           input.form-control#twitterUsername(name='twitterUsername', value=contact.twitterUsername, readonly)
-          
+      
+      div.form-group
+        label(for='email') Email
+        div.input-group
+          span.input-group-addon 
+            span.fa.fa-envelope      
+          input.form-control#email(name='email', value=contact.email)
+      
       div.form-group
         label(for='memo') Memo
         textarea.form-control#memo(name='memo') #{contact.memo}
-        
+
+      div.form-group
+        label(for='connectionLocation_name') Location (where you met)
+        input.form-control#connectionLocationName(name='connectionLocation_name', value=contact.connectionLocation.name)
+
+      div.form-group
+        input#lat(type='hidden', name='connectionLocation_lat', value=contact.connectionLocation.lat)
+        input#lng(type='hidden', name='connectionLocation_lng', value=contact.connectionLocation.lng)
+        a.btn.btn-danger#location
+          span.glyphicon.glyphicon-map-marker
+          span#inner(style='padding-left: 0.5em') 
+            if ( contact.connectionLocation.lat  && contact.connectionLocation.lng)
+              | Update coordinates
+            else
+              | Detect coordinates
+
       div.form-group
         label(for='tags') Tags (comma separated)
-        //br
-        input.form-control#tags(name='tags', value=contact.tags)
-        //input.form-control#tags(name='tags', value=contact.tags, data-role='tagsinput')
-
-      div.form-group
-        label(for='connectionLocation.name') Location name
-        input.form-control#connectionLocationName(name='connectionLocation.name')
-
-      div.form-group
-        input#lat(type='hidden', name='connectionLocation.lat')
-        input#lng(type='hidden', name='connectionLocation.lng')
-        a.btn.btn-danger#location(href='#')
-          span.glyphicon.glyphicon-map-marker
-          span#inner(style='padding-left: 0.5em') Get location
-        
+        input.form-control#tags(name='tags', value=contact.tags)      
+      
+      br   
+      
       div.form-group
         a.btn.btn-default(href='/') Cancel
         | &nbsp; &nbsp;
         button.btn.btn-primary(type='submit') Submit
   
   script.
+    var gotGPS = false;
     $('a#location').click(function() {
-      if (navigator.geolocation){
-        $('a#location').removeClass('btn-danger').addClass('btn-success');
-        $('span#inner').html('Location acquired');
-        navigator.geolocation.getCurrentPosition(function (position){
-          $('input#lat').val(position.coords.latitude);
-          $('input#lng').val(position.coords.longitude);
-        });
-      } else {
-        $('span#inner').html('Unable to locate');
+      if(!gotGPS){
+        if (navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(function (position){
+            $('a#location').removeClass('btn-danger').addClass('btn-success');
+            $('span#inner').html('Location acquired');            
+            alert(position.coords);
+            $('input#lat').val(position.coords.latitude);
+            $('input#lng').val(position.coords.longitude);
+            gotGPS = true;
+          }, function(error){
+            $('span#inner').html('Unable to detect location');
+          });
+        } else {
+          $('span#inner').html('Unable to detect location');
+        }
       }
     });

@@ -83,13 +83,26 @@ exports.new = function(req, res) {
 exports.create = function (req, res) {
 	  var contact = new Contact(req.body);	  
 	  contact.username = req.user.username;
+      connectionLocation = {};
+	  if(req.body.connectionLocation_name)
+	  {
+        connectionLocation.name = req.body.connectionLocation_name; 
+	  } else {
+		connectionLocation.name = '';
+	  }
+	  if(req.body.connectionLocation_lat){
+		connectionLocation.lat = req.body.connectionLocation_lat; 
+      }
+	  if(req.body.connectionLocation_lng){
+	    connectionLocation.lng = req.body.connectionLocation_lng; 
+	  }
+	  contact.connectionLocation = connectionLocation;	  
 	  
 	  console.log('saving contact: ' + contact);
 
 	  contact.save(function (err) {
 	    if (!err) {	      
-        // TODO: Come up with a better tweet
-        var tweet = util.format("@%s just connected with @%s through @memozerapp www.memozer.com", contact.username, contact.twitterUsername);
+        var tweet = util.format("@%s and @%s just connected through #memozer", contact.username, contact.twitterUsername);
         twit.post_tweet(tweet, function (postTweetResponse) {
           console.log(postTweetResponse);
         });
@@ -113,19 +126,34 @@ exports.update = function (req, res) {
 	
 		var contact = contacts[0];
 		console.log('updating contact: ' + contact);
-		contact = _.extend(contact, req.body);
 		
-		  contact.save(function (err) {
-			  if (!err) {	      
-				  return res.redirect('/contacts/' + contact.twitterUsername);
-			  }		
-			  console.log(err);
-			  
-			  res.render('contact_edit', {
-		      title: 'memozer | edit contact',
-		      contact: contact,
-		      errors: utils.errors(err.errors || err)
-		    });
+		contact = _.extend(contact, req.body);		
+		connectionLocation = {};
+		if(req.body.connectionLocation_name)
+		{
+			connectionLocation.name = req.body.connectionLocation_name; 
+		} else {
+			connectionLocation.name = '';
+		}
+		if(req.body.connectionLocation_lat){
+			connectionLocation.lat = req.body.connectionLocation_lat; 
+		}
+		if(req.body.connectionLocation_lng){
+			connectionLocation.lng = req.body.connectionLocation_lng; 
+		}
+		contact.connectionLocation = connectionLocation;
+		console.log('updated values: ' + contact);
+		
+		contact.save(function (err) {
+		  if (!err) {	      
+			return res.redirect('/contacts/' + contact.twitterUsername);
+		  }		
+		  console.log(err);  
+		  res.render('contact_edit', {
+		    title: 'memozer | edit contact',
+		  	contact: contact,
+		  	errors: utils.errors(err.errors || err)
+		  });
 		});
 	});	
 };

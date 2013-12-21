@@ -30,6 +30,7 @@ var ContactSchema = new Schema({
   name: {type : String, default : '', trim : true},
   username: {type : String, default : '', trim : true}, // of contacts owner
   twitterUsername: {type : String, default : '', trim : true}, // of contact
+  email: {type: String, default: '', trim: true},
   memo: {type : String, default : '', trim : true},
 // user: {type : Schema.ObjectId, ref : 'User'},
   profileImageUrl: {type : String, default : '', trim : true},
