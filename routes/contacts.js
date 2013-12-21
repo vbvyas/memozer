@@ -112,7 +112,7 @@ exports.create = function (req, res) {
 	  contact.save(function (err) {
 	    if (!err) {	      
         // TODO: Come up with a better tweet
-        var tweet = util.format("@%s just connected with @%s through @memozerapp www.memozer.com", contact.username, contact.twitterUsername);
+        var tweet = util.format("@%s just connected with @%s through #memozer", contact.username, contact.twitterUsername);
         twit.post_tweet(tweet, contact.connectionLocation); 
 	      return res.redirect('/contacts/' + contact.twitterUsername);
 	    }
