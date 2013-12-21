@@ -72,7 +72,6 @@ block content
           navigator.geolocation.getCurrentPosition(function (position){
             $('a#location').removeClass('btn-danger').addClass('btn-success');
             $('span#inner').html('Location acquired');            
-            alert(position.coords);
             $('input#lat').val(position.coords.latitude);
             $('input#lng').val(position.coords.longitude);
             gotGPS = true;
