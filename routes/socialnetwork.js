@@ -4,6 +4,9 @@
 
 var twit = require('../api/twit');
 var querystring = require("querystring");
+var mongoose = require('mongoose');
+var Contact = mongoose.model('Contact');
+var async = require('async');
 
 exports.search = function(req, res) {
 	res.render('sn_search', {
@@ -12,10 +15,25 @@ exports.search = function(req, res) {
 };
 
 exports.search_results = function(req, res) {
+	var searchResponse;
+	var results;
 	if (req.query.twitter) {
 		// Twitter handle specified, do lookup
-		twit.search_handle(req.query.twitter.trim(), function(searchResponse) {
-			results = parseTwitterUserSearchResults(searchResponse);
+		async.series([
+				function(callback) {
+					twit.search_handle(req.query.twitter.trim(), function(
+							response) {
+						searchResponse = response;
+						callback();
+					});
+				},
+				function(callback) {
+					parseTwitterUserSearchResults(searchResponse,
+							req.user.username, function(parsedResults) {
+								results = parsedResults;
+								callback();
+							});
+				} ], function(err) {
 			res.render('sn_search_results', {
 				title : 'memozer | results for "' + req.query.twitter + '"',
 				results : results,
@@ -23,11 +41,23 @@ exports.search_results = function(req, res) {
 			});
 		});
 	} else {
-		// Person's name specified
-		twit.search(req.query.name, function(searchResponse) {
-			results = parseTwitterUserSearchResults(searchResponse);
+		// Person's name specified, do twitter search
+		async.series([
+				function(callback) {
+					twit.search(req.query.name, function(response) {
+						searchResponse = response;
+						callback();
+					});
+				},
+				function(callback) {
+					parseTwitterUserSearchResults(searchResponse,
+							req.user.username, function(parsedResults) {
+								results = parsedResults;
+								callback();
+							});
+				} ], function(err) {
 			res.render('sn_search_results', {
-				title : 'memozer | results for "' + req.query.name + '"',
+				title : 'memozer | results for "' + req.query.twitter + '"',
 				results : results,
 				query : req.query.name
 			});
@@ -35,30 +65,36 @@ exports.search_results = function(req, res) {
 	}
 };
 
-function parseTwitterUserSearchResults(searchResponse) {
-	// console.log(searchResponse.length);
-	// console.log(searchResponse[0].name);
-	// console.log(searchResponse[0].screen_name);
-	// console.log(searchResponse[0].description);
-	// console.log(searchResponse[0].profile_image_url);
-	// console.log(searchResponse[0].location);
-	// console.log(new Date().getTime());
-    if(!searchResponse || searchResponse.length == 0){
-    	return [];
-    }
-	var results = [];
-	for ( var i = 0; searchResponse && i < searchResponse.length; i++) {
-		result = new Object();
-		result.name = searchResponse[i].name;
-		result.screen_name = searchResponse[i].screen_name;
-		result.profile_image_url = searchResponse[i].profile_image_url;
-		result.description = searchResponse[i].description;
-		var quick_add_link = '/contacts/new?' + querystring.stringify(result);
-		result.quick_add_link = quick_add_link;
-		// TODO some hook in case already a contact
-
-		results.push(result);
+function parseTwitterUserSearchResults(searchResponse, username, cb) {
+	if (!searchResponse || searchResponse.length == 0) {
+		return [];
 	}
+	var results = [];
+	async.each(searchResponse, function(searchResult, callback) {
+		Contact.load(username, searchResult.screen_name,
+				function(err, contacts) {
+					result = new Object();
+					result.name = searchResult.name;
+					result.screen_name = searchResult.screen_name;
+					result.profile_image_url = searchResult.profile_image_url;
+					result.description = searchResult.description;
+					if (err || !contacts || contacts.length <= 0) {
+						// Not connected
+						var quick_add_link = '/contacts/new?'
+								+ querystring.stringify(result);
+						result.quick_add_link = quick_add_link;
+					} else {
+						// Connected
+						result.contact_link = '/contacts/'
+								+ searchResult.screen_name;
+					}
+					results.push(result);
 
-	return results;
+					callback();
+				});
+	}, function(err) {
+		if (err)
+			console.log(err);
+		cb(results);
+	});
 }
