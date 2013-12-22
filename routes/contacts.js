@@ -123,20 +123,7 @@ exports.update = function (req, res) {
 		console.log('updating contact: ' + contact);
 		
 		contact = _.extend(contact, req.body);		
-		connectionLocation = {};
-		if(req.body.connectionLocation_name)
-		{
-			connectionLocation.name = req.body.connectionLocation_name; 
-		} else {
-			connectionLocation.name = '';
-		}
-		if(req.body.connectionLocation_lat){
-			connectionLocation.lat = req.body.connectionLocation_lat; 
-		}
-		if(req.body.connectionLocation_lng){
-			connectionLocation.lng = req.body.connectionLocation_lng; 
-		}
-		contact.connectionLocation = connectionLocation;
+		contact.connectionLocation = req.body.connectionLocation;
 		console.log('updated values: ' + contact);
 		
 		contact.save(function (err) {
