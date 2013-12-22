@@ -26,10 +26,13 @@ block content
       each tag in contact.tags.split(',')
         span.label.label-info #{tag}
         | &nbsp;
-
-  br
+      br
+  if(contact.connectionLocation.name)
+    p.text-info Met @ #{contact.connectionLocation.name}
   p.text-primary Added #{ago}
-  br        
+
+  hr
+  
   .text-center
     a.twitter-share-button(
       href="https://twitter.com/share",
