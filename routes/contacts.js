@@ -92,20 +92,7 @@ exports.new = function(req, res) {
 exports.create = function (req, res) {
 	  var contact = new Contact(req.body);	  
 	  contact.username = req.user.username;
-      connectionLocation = {};
-	  if(req.body.connectionLocation_name)
-	  {
-        connectionLocation.name = req.body.connectionLocation_name; 
-	  } else {
-		connectionLocation.name = '';
-	  }
-	  if(req.body.connectionLocation_lat){
-		connectionLocation.lat = req.body.connectionLocation_lat; 
-      }
-	  if(req.body.connectionLocation_lng){
-	    connectionLocation.lng = req.body.connectionLocation_lng; 
-	  }
-	  contact.connectionLocation = connectionLocation;	  
+	  contact.connectionLocation = req.body.connectionLocation;	  
 	  
 	  console.log('saving contact: ' + contact);
 

@@ -39,12 +39,12 @@ block content
         textarea.form-control#memo(name='memo') #{contact.memo}
 
       div.form-group
-        label(for='connectionLocation_name') Location (where you met)
-        input.form-control#connectionLocationName(name='connectionLocation_name', value=contact.connectionLocation.name)
+        label(for='connectionLocation[name]') Location (where you met)
+        input.form-control#connectionLocationName(name='connectionLocation[name]', value=contact.connectionLocation.name)
 
       div.form-group
-        input#lat(type='hidden', name='connectionLocation_lat', value=contact.connectionLocation.lat)
-        input#lng(type='hidden', name='connectionLocation_lng', value=contact.connectionLocation.lng)
+        input#lat(type='hidden', name='connectionLocation[lat]', value=contact.connectionLocation.lat)
+        input#lng(type='hidden', name='connectionLocation[lng]', value=contact.connectionLocation.lng)
         a.btn.btn-danger#location
           span.glyphicon.glyphicon-map-marker
           span#inner(style='padding-left: 0.5em') 
