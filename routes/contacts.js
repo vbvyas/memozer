@@ -53,7 +53,7 @@ exports.show = function(req, res) {
       return (!str || /^\s*$/.test(str));
     }
 
-    var tweet = util.format("Hey @%s, it was great meeting you%s. Let's meet for coffee!", contact.twitterUsername, isBlank(locationName) ? '' : ' at ' + locationName);
+    var tweet = util.format("Hey @%s, let's meet.", contact.twitterUsername);
 		
 		res.render('contact', {
 			title : 'memozer | contact',
