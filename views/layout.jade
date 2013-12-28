@@ -12,6 +12,7 @@ html
     script(src='/javascripts/google.js')
     script(src='/javascripts/mixpanel.js')
     script(src='/lib/jquery/jquery.min.js')
+    script(src!='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
     //
        Le HTML5 shim, for IE6-8 support of HTML5 elements
     //if lt IE 9
@@ -28,7 +29,7 @@ html
           }
       })(); 
       //--> 
-            
+    block extra_head        
   body
     div.navbar.navbar-default.navbar-fixed-top
       div.container

@@ -1,5 +1,29 @@
 extends layout
 
+if(contact.connectionLocation.lat && contact.connectionLocation.lng)
+  block extra_head
+    script.
+      var map;
+      function initialize() {
+        var myLatlng = new google.maps.LatLng(#{contact.connectionLocation.lat}, #{contact.connectionLocation.lng});
+        var mapOptions = {
+          zoom: 17,
+          center: myLatlng
+        }
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: 'Hello World!'
+        });
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+      google.maps.event.addDomListener(window, "resize", function() {
+       var center = map.getCenter();
+       google.maps.event.trigger(map, "resize");
+       map.setCenter(center); 
+      });
 block content
   h2 #{contact.name}
   div.row
@@ -22,6 +46,10 @@ block content
     p You have no notes on this person           
   if(contact.connectionLocation.name)
     p.text-info Met @ #{contact.connectionLocation.name}
+  if ( contact.connectionLocation.lat  && contact.connectionLocation.lng)
+    div#mapcontainer
+      div#dummy
+      div#map-canvas
   p.text-primary Added #{ago}
   div
     if(contact.tags)
@@ -68,4 +96,6 @@ block content
 
   script.
     mixpanel.track("contact");
-    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");    
+  
+  
