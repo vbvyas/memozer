@@ -28,7 +28,14 @@ block content
     h3 No follow-ups found
     p.text-info Talk to your peeps and make plans!
     
-  br        
+  br
+  ul.pager
+    if(page > 1)
+      li
+        a(href="#{pageUrl}?page=#{page-1}&perPage=#{perPage}") Previous
+    if(page < pages)
+      li
+        a(href="#{pageUrl}?page=#{page+1}&perPage=#{perPage}") Next            
   ul.pager
     li.previous 
       a(href="/") &larr; &nbsp; Go Home &nbsp;

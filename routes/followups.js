@@ -2,7 +2,7 @@ var mongoose = require('mongoose'), Followup = mongoose.model('Followup'), _ = r
 
 exports.list = function(req, res) {
 	var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
-	var perPage = 30;
+	var perPage = (req.param('perPage') > 0 ? req.param('perPage') : 25);
 	var options = {
 		perPage : perPage,
 		page : page,
@@ -15,11 +15,13 @@ exports.list = function(req, res) {
 		if (err)
 			return res.render('500');
 
-		Followup.count().exec(function(err, count) {
+		Followup.count({username : req.user.username}).exec(function(err, count) {
 			res.render('followup_list', {
 				title : 'memozer | followups',
 				followups : followups,
+				perPage : perPage,
 				page : page + 1,
+				pageUrl: '/followups',
 				pages : Math.ceil(count / perPage)
 			});
 		});
@@ -29,7 +31,7 @@ exports.list = function(req, res) {
 exports.contactFollowups = function(req, res) {
 	var contactTwitter = req.param('twitter');
 	var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
-	var perPage = 30;
+	var perPage = (req.param('perPage') > 0 ? req.param('perPage') : 25);
 	var options = {
 		perPage : perPage,
 		page : page,
@@ -43,11 +45,13 @@ exports.contactFollowups = function(req, res) {
 		if (err)
 			return res.render('500');
 
-		Followup.count().exec(function(err, count) {
+		Followup.count({username : req.user.username, contactUsername: contactTwitter}).exec(function(err, count) {
 			res.render('followup_list', {
 				title : 'memozer | followups',
 				followups : followups,
+				perPage : perPage,
 				page : page + 1,
+				pageUrl: '/followups/contacts/' + contactTwitter,
 				pages : Math.ceil(count / perPage),
 				contactTwitter: contactTwitter
 			});

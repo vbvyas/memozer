@@ -8,7 +8,7 @@ var mongoose = require('mongoose')
 
 exports.list = function(req, res) {
 	  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
-	  var perPage = 30;
+	  var perPage = (req.param('perPage') > 0 ? req.param('perPage') : 25);
 	  var options = {
 	    perPage: perPage,
 	    page: page,
@@ -20,11 +20,13 @@ exports.list = function(req, res) {
 		// console.log(contacts);
 		if(err) return res.render('500');
 		
-		Contact.count().exec(function (err, count){								
+		Contact.count({username: req.user.username}).exec(function (err, count){								
 			res.render('contacts_list', {
 				title : 'memozer | contacts',
 				contacts: contacts,
 				page: page + 1,
+				pageUrl: '/contacts',
+				perPage: perPage,			
 				pages: Math.ceil(count / perPage)
 				});	
 			}
@@ -98,9 +100,9 @@ exports.create = function (req, res) {
 
 	  contact.save(function (err) {
 	    if (!err) {	      
-        // TODO: Come up with a better tweet
-        var tweet = util.format("@%s just connected with @%s through #memozer", contact.username, contact.twitterUsername);
-        twit.post_tweet(tweet, contact.connectionLocation); 
+        // TODO: Commenting out for now
+        //var tweet = util.format("@%s just connected with @%s through #memozer", contact.username, contact.twitterUsername);
+        //twit.post_tweet(tweet, contact.connectionLocation); 
 	      return res.redirect('/contacts/' + contact.twitterUsername);
 	    }
 
