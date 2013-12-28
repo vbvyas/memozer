@@ -34,6 +34,35 @@ exports.list = function(req, res) {
 	});
 };
 
+exports.byTag = function(req, res) {
+	  var tag = req.param('tag');
+	  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
+	  var perPage = (req.param('perPage') > 0 ? req.param('perPage') : 25);
+	  var options = {
+	    perPage: perPage,
+	    page: page,
+	    criteria: {username: req.user.username, tags: tag}
+	  }
+	  
+	Contact.list(options, function(err, contacts){
+		// console.log('LOAD RETURNED...');
+		// console.log(contacts);
+		if(err) return res.render('500');
+		
+		Contact.count({username: req.user.username, tags: tag}).exec(function (err, count){								
+			res.render('contacts_list', {
+				title : 'memozer | contacts tagged as ' + tag,
+				contacts: contacts,
+				page: page + 1,
+				pageUrl: '/contacts/tag/' + tag,
+				perPage: perPage,			
+				pages: Math.ceil(count / perPage)
+				});	
+			}
+		);
+	});
+};
+
 exports.show = function(req, res) {
 	var contactTwitterUsername = req.param('twitter');		
 // console.log("REQ: " + req.params);
@@ -101,8 +130,9 @@ exports.create = function (req, res) {
 	  contact.save(function (err) {
 	    if (!err) {	      
         // TODO: Commenting out for now
-        //var tweet = util.format("@%s just connected with @%s through #memozer", contact.username, contact.twitterUsername);
-        //twit.post_tweet(tweet, contact.connectionLocation); 
+        // var tweet = util.format("@%s just connected with @%s through
+		// #memozer", contact.username, contact.twitterUsername);
+        // twit.post_tweet(tweet, contact.connectionLocation);
 	      return res.redirect('/contacts/' + contact.twitterUsername);
 	    }
 

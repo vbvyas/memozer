@@ -109,6 +109,7 @@ app.get('/contacts/:twitter', auth.requiresLogin, contacts.show);
 app.get('/contacts/:twitter_sn/edit', auth.requiresLogin, contacts.edit);
 app.put('/contacts/:twitter_sn', auth.requiresLogin, contacts.update);
 app.del('/contacts/:twitter_sn', auth.requiresLogin, contacts.destroy);
+app.get('/contacts/tag/:tag', auth.requiresLogin, contacts.byTag);
 
 // Follow-ups routes
 app.get('/followups', auth.requiresLogin, followups.list);

@@ -4,7 +4,8 @@
  */
 
 var mongoose = require('mongoose')
-  , Schema = mongoose.Schema
+  , Schema = mongoose.Schema,
+  _ = require('underscore');
 
 /**
  * Getters
@@ -19,7 +20,7 @@ var getTags = function (tags) {
  */
 
 var setTags = function (tags) {
-  return tags.split(',')
+  return _.uniq(tags.toLowerCase().split(','))
 }
 
 /**

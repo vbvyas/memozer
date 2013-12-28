@@ -54,7 +54,9 @@ block content
   div
     if(contact.tags)
       each tag in contact.tags.split(',')
-        span.label.label-info #{tag}
+        - var decodedTag = decodeURIComponent(tag)
+        a(href="/contacts/tag/#{tag}")
+          span.label.label-info #{decodedTag}
         | &nbsp;
       br
   hr  
