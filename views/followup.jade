@@ -29,10 +29,22 @@ block content
   p.text-primary #{created_ago}
   br       
   - var action = '/followups/' + followup.id
-  form.text-center.form-inline.confirm(action=action, method="post")
-    input(type='hidden', name='_csrf', value="#{csrf_token}")
-    input(type="hidden", name="_method", value="DELETE")
-    button.btn.btn-danger(type="submit") Delete Follow-up
+  button.btn.btn-danger.text-center(data-toggle="modal", data-target='#delete-confirmation')
+    span.fa.fa-trash-o &nbsp; &nbsp; 
+    | Delete Follow-up    
+  #delete-confirmation.modal.fade(tabindex='-1', role='dialog', aria-labelledby='delete-confirmation-label', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+          h4.modal-title#delete-confirmation-label Confirm deletion
+        .modal-body
+          p Are you sure you want to delete this follow-up?
+        form.modal-footer.text-center(action=action, method="post")
+          input(type='hidden', name='_csrf', value="#{csrf_token}")
+          input(type="hidden", name="_method", value="DELETE")
+          buttn.btn.btn-default(type='button', data-dismiss='modal') Cancel
+          button.btn.btn-primary(type='Submit') DELETE
   br      
      
   ul.pager

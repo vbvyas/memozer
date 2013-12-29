@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
   , Contact = mongoose.model('Contact')
+  , Followup = mongoose.model('Followup')
   , _ = require('underscore')
   , utils = require('../lib/utils')
   , moment = require('moment')
@@ -188,12 +189,19 @@ exports.edit = function(req, res) {
 
 exports.destroy = function(req, res){
 	var contactTwitterUsername = req.params.twitter_sn;		
-	
+		
+	// Load contact
 	Contact.load(req.user.username, contactTwitterUsername, function(err, contacts){
 		if(err) return res.render('500');		
 		var contact = contacts[0];
-	    contact.remove(function(err){
-	    	res.redirect('/contacts');
-	  });
+	
+		// Delete follow-ups
+		Followup.remove({username : req.user.username, contactUsername: contactTwitterUsername}, function(err){
+			if(err) return res.render('500');		
+		    // Delete contact itself
+			contact.remove(function(err){
+		    	res.redirect('/contacts');
+		  });
+		});			
 	});		
 };

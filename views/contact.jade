@@ -82,12 +82,24 @@ block content
         span.fa.fa-envelope  &nbsp; &nbsp; 
         | Send Email      
     - var action = '/contacts/' + contact.twitterUsername
-    form.text-center(action=action, method="post")
-      input(type='hidden', name='_csrf', value="#{csrf_token}")
-      input(type="hidden", name="_method", value="DELETE")
-      button.text-warning.list-group-item(style='width:100%', type="submit")
-        span.fa.fa-trash-o &nbsp; &nbsp; 
-        | Delete Contact
+    button.text-warning.list-group-item(style='width:100%', data-toggle="modal", data-target='#delete-confirmation')
+      span.fa.fa-trash-o &nbsp; &nbsp; 
+      | Delete Contact    
+    #delete-confirmation.modal.fade(tabindex='-1', role='dialog', aria-labelledby='delete-confirmation-label', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+            h4.modal-title#delete-confirmation-label Confirm deletion
+          .modal-body
+            p Are you sure you want to delete 
+              span.text-warning #{contact.name} 
+              | from your contacts?
+          form.modal-footer.text-center(action=action, method="post")
+            input(type='hidden', name='_csrf', value="#{csrf_token}")
+            input(type="hidden", name="_method", value="DELETE")
+            buttn.btn.btn-default(type='button', data-dismiss='modal') Cancel
+            button.btn.btn-primary(type='Submit') DELETE
   
   br 
   
