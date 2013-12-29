@@ -3,6 +3,10 @@ extends layout
 block content
   if(followups.length)
     h3 Follow-ups
+    if(showComplete)
+       a(href="#{pageUrl}?page=#{page}&perPage=#{perPage}&showComplete=false") [-] Hide complete
+    else
+      a(href="#{pageUrl}?page=#{page}&perPage=#{perPage}&showComplete=true") [+] Show complete    
   each followup in followups
     hr
     div.row
@@ -32,10 +36,10 @@ block content
   ul.pager
     if(page > 1)
       li
-        a(href="#{pageUrl}?page=#{page-1}&perPage=#{perPage}") Previous
+        a(href="#{pageUrl}?page=#{page-1}&perPage=#{perPage}&showComplete=#{showComplete}") Previous
     if(page < pages)
       li
-        a(href="#{pageUrl}?page=#{page+1}&perPage=#{perPage}") Next            
+        a(href="#{pageUrl}?page=#{page+1}&perPage=#{perPage}&showComplete=#{showComplete}") Next            
   ul.pager
     li.previous 
       a(href="/") &larr; &nbsp; Go Home &nbsp;

@@ -3,24 +3,35 @@ var mongoose = require('mongoose'), Followup = mongoose.model('Followup'), _ = r
 exports.list = function(req, res) {
 	var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
 	var perPage = (req.param('perPage') > 0 ? req.param('perPage') : 25);
+	var showComplete = (req.param('showComplete') != null ? req.param('showComplete') == 'true' : false);
+	var criteria = null;
+	if(showComplete){
+		criteria = {
+			username : req.user.username
+		}
+	} else {
+		criteria = {
+				username : req.user.username,
+				isComplete : false
+			}
+	}
 	var options = {
 		perPage : perPage,
 		page : page,
-		criteria : {
-			username : req.user.username
-		}
+		criteria : criteria
 	}
 
 	Followup.list(options, function(err, followups) {
 		if (err)
 			return res.render('500');
 
-		Followup.count({username : req.user.username}).exec(function(err, count) {
+		Followup.count(criteria).exec(function(err, count) {
 			res.render('followup_list', {
 				title : 'memozer | followups',
 				followups : followups,
 				perPage : perPage,
 				page : page + 1,
+				showComplete : showComplete,
 				pageUrl: '/followups',
 				pages : Math.ceil(count / perPage)
 			});
@@ -32,27 +43,40 @@ exports.contactFollowups = function(req, res) {
 	var contactTwitter = req.param('twitter');
 	var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
 	var perPage = (req.param('perPage') > 0 ? req.param('perPage') : 25);
-	var options = {
-		perPage : perPage,
-		page : page,
-		criteria : {
+	// By default show complete for contact followups
+	var showComplete = (req.param('showComplete') != null ? req.param('showComplete') == 'true' : true);
+	var criteria = null;
+	if(showComplete){
+		criteria = {
 			username : req.user.username,
 			contactUsername: contactTwitter
 		}
+	} else {
+		criteria = {
+				username : req.user.username,
+				contactUsername: contactTwitter,
+				isComplete : false
+			}
+	}
+	var options = {
+		perPage : perPage,
+		page : page,
+		criteria : criteria
 	}
 
 	Followup.list(options, function(err, followups) {
 		if (err)
 			return res.render('500');
 
-		Followup.count({username : req.user.username, contactUsername: contactTwitter}).exec(function(err, count) {
+		Followup.count(criteria).exec(function(err, count) {
 			res.render('followup_list', {
 				title : 'memozer | followups',
 				followups : followups,
 				perPage : perPage,
 				page : page + 1,
-				pageUrl: '/followups/contacts/' + contactTwitter,
+				showComplete : showComplete,
 				pages : Math.ceil(count / perPage),
+				pageUrl: '/followups/contacts/' + contactTwitter,
 				contactTwitter: contactTwitter
 			});
 		});

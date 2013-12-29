@@ -8,7 +8,8 @@ var mongoose = require('mongoose'), Contact = mongoose.model('Contact'), Followu
 exports.index = function(req, res) {
 	var username = req.user ? req.user.username : null;
 	Followup.count({
-		username : username
+		username : username,
+		isComplete: false
 	}, function(err, followupCounts) {
 		Contact.count({
 			username : username
