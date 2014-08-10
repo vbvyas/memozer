@@ -1,11 +1,11 @@
 memozer
 =========
 
-memozer - organize your contacts and shit
+Web code for [Memozer](http://www.memozer.com/) - organize your contacts and shit
 
 ## Configuration
 
-memozer assumes that a few environment variables are defined, a list of whom are specified below. if running locally you can places these in a text file called "/.env"
+memozer assumes that a few environment variables are defined, a list of whom are specified below. if running locally you can places these in a text file called "/env"
 
 ```sh
   TWITTER_CONSUMER_KEY=GET_FROM_TWITTER
