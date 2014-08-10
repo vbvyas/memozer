@@ -1,7 +1,7 @@
 memozer
 =========
 
-Web code for [Memozer](http://www.memozer.com/) - organize your contacts and shit
+Web code for [Memozer](http://www.memozer.com/) - meet. connect. meet again!
 
 ## Configuration
 
